@@ -1,0 +1,79 @@
+// Prisma schema for CyberLaw Atlas
+// Designed for SQLite in local development, easily switchable to PostgreSQL in production
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Country {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  isoCode   String     @unique // ISO 3166-1 alpha-2 standard (e.g. IN, CN, US, GB)
+  region    String
+  flagEmoji String
+  laws      CyberLaw[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([isoCode])
+  @@index([name])
+}
+
+model CyberLaw {
+  id                 String   @id @default(cuid())
+  title              String
+  year               Int
+  category           String   // e.g. Cybercrime, Data Protection, Privacy, Cybersecurity, Electronic Transactions, Digital Evidence, Online Fraud, Intellectual Property, Critical Infrastructure
+  summary            String
+  keyProvisions      String   // Stored as JSON string or multi-line text list
+  authority          String   // Responsible agency/ministry
+  officialUrl        String
+  sourceName         String   // Source attribution (e.g. UNCTAD, Official Gazette)
+  sourceUrl          String
+  lastUpdated        String
+  availabilityStatus String   @default("comprehensive") // comprehensive, specific, partial, unavailable, unknown
+  isSampleData       Boolean  @default(true)
+  countryId          String
+  country            Country  @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([countryId])
+  @@index([category])
+  @@index([year])
+}
+
+// NewsArticle model for AI Cybersecurity Intelligence
+model NewsArticle {
+  id             String    @id @default(cuid())
+  title          String
+  description    String
+  sourceName     String
+  sourceUrl      String
+  articleUrl     String    @unique
+  imageUrl       String?
+  author         String?
+  publishedAt    DateTime
+  category       String    // e.g. AI-Powered Attacks, AI Agent Security, LLM Security, Prompt Injection, AI Malware, Deepfake Threats, AI Vulnerabilities, AI Security Research, AI Cybersecurity Regulation, AI Security Tools, General AI Security
+  threatLevel    String    // Low, Medium, High, Critical
+  relevanceScore Float     @default(0.0)
+  isRelevant     Boolean   @default(true)
+
+  // Optional fields reserved for future AI processing layer
+  aiSummary      String?
+  whyItMatters   String?
+  aiProcessedAt  DateTime?
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([category])
+  @@index([threatLevel])
+  @@index([publishedAt])
+  @@index([isRelevant])
+}
