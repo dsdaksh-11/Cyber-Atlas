@@ -107,9 +107,13 @@ export function NewsView() {
 
       if (res.ok && data.success) {
         setRefreshMessage(
-          `Refreshed feeds: ${data.articlesFetched} checked, ${data.articlesSaved} new relevant articles saved.`
+          `Refreshed feeds: ${data.articlesFetched} checked, ${data.articlesSaved} relevant articles available.`
         )
-        fetchArticles()
+        if (data.articles && data.articles.length > 0) {
+          setArticles(data.articles)
+        } else {
+          fetchArticles()
+        }
       } else {
         setRefreshMessage(data.error || 'Feed refresh complete.')
       }
