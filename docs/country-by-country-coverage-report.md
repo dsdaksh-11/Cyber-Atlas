@@ -11,10 +11,10 @@
 
 ```
 Total Monitored Jurisdictions:       48
-Total Documented Legal Instruments:  137 (34 Verified, 103 Baseline Under Review)
-Independently Verified Jurisdictions: 3 (India, United States, United Kingdom)
-Current Batch in Progress:           Batch 1 Completed (US & UK Verified across all 9 categories)
-Upcoming Queue:                      Batch 2 (AU, CA, SG)
+Total Documented Legal Instruments:  156 (61 Verified, 95 Baseline Under Review)
+Independently Verified Jurisdictions: 6 (India, United States, United Kingdom, Australia, Canada, Singapore)
+Current Batch in Progress:           Batch 2 Completed (AU, CA, SG Verified across all 9 categories)
+Upcoming Queue:                      Batch 3 (DE, FR, NL, ES, IT)
 Total Country-Category Coverages:    432 Records Tracked
 ```
 
@@ -27,9 +27,9 @@ Total Country-Category Coverages:    432 Records Tracked
 | **India** | `IN` | **15** | **15** | 0 | **9 / 9** | None | 15 Direct / 0 Generic | `INDEPENDENTLY_VERIFIED`. Full statutory benchmark across IT Act, DPDP Act, BNS, BSA, BNSS, CERT-In, RBI, NCIIPC, Consumer Rules, CGST. |
 | **United States** | `US` | **10** | **10** | 0 | **9 / 9** | None | 10 Direct / 0 Generic | `INDEPENDENTLY_VERIFIED`. CFAA, ECPA, HIPAA, CISA, CIRCIA (72h/24h), E-SIGN, GLBA, FRE 902(13/14), COPPA, Wayfair Economic Nexus. |
 | **United Kingdom** | `GB` | **9** | **9** | 0 | **9 / 9** | None | 9 Direct / 0 Generic | `INDEPENDENTLY_VERIFIED`. Computer Misuse Act, DPA 2018/UK GDPR (72h), UK NIS Regs (72h), Telecoms Security, ECA 2000, Fraud Act, PACE ss.19-20, Online Safety Act, VATA. |
-| **Australia** | `AU` | 2 | 0 | 2 | 2 / 9 | Cybersecurity, E-Trans, Evidence, Fraud, CI, Consumer, Tax | 2 Direct / 0 Generic | `NEEDS_REVIEW` (Batch 2). Criminal Code Part 10.7 & Privacy Act indexed. Scheduled: SOCI Act (72h reporting), Evidence Act 1995, ETA 1999, APRA CPS 234. |
-| **Canada** | `CA` | 2 | 0 | 2 | 2 / 9 | Cybersecurity, E-Trans, Evidence, Fraud, CI, Consumer, Tax | 2 Direct / 0 Generic | `NEEDS_REVIEW` (Batch 2). Criminal Code ss. 342.1/430 & PIPEDA indexed. Scheduled: Bill C-26 (CCSPA), Canada Evidence Act ss. 31.1–31.8, OSFI B-13. |
-| **Singapore** | `SG` | 3 | 0 | 3 | 3 / 9 | E-Trans, Evidence, Fraud, CI, Consumer, Tax | 3 Direct / 0 Generic | `NEEDS_REVIEW` (Batch 2). CMA, PDPA, Cybersecurity Act indexed. Scheduled: Cybersecurity Amendment Act 2024, Evidence Act s. 35A, ETA 2010, MAS Notice 644. |
+| **Australia** | `AU` | **9** | **9** | 0 | **9 / 9** | None | 9 Direct / 0 Generic | `INDEPENDENTLY_VERIFIED`. Criminal Code Part 10.7, Privacy Act 1988 (NDB Scheme), SOCI Act 2018 (12h/72h reporting), TIA Act 1979 (data retention), ETA 1999, APRA CPS 234 (72h), Evidence Act 1995, Online Safety Act 2021, and GST Act 1999 (digital supplies). |
+| **Canada** | `CA` | **9** | **9** | 0 | **9 / 9** | None | 9 Direct / 0 Generic | `INDEPENDENTLY_VERIFIED`. Criminal Code ss. 342.1/430, PIPEDA, Bill C-26 (CCSPA - mandatory immediate reporting), Telecoms Act cyber orders, PIPEDA Part 2 (e-documents), OSFI Guideline B-13 (24h), Canada Evidence Act ss. 31.1–31.8, CASL 2010, and Excise Tax Act. |
+| **Singapore** | `SG` | **9** | **9** | 0 | **9 / 9** | None | 9 Direct / 0 Generic | `INDEPENDENTLY_VERIFIED`. Computer Misuse Act 1993, PDPA 2012 (72h reporting), Cybersecurity Act 2018 (2024 Amendment - 2h reporting), Telecoms Act 1999, ETA 2010 (MLETR), MAS Notice 644 (1h reporting), Evidence Act ss. 35A/116A, OCHA 2023, and GST Act 1993 (OVR). |
 | **Germany** | `DE` | 2 | 0 | 2 | 2 / 9 | Cybersecurity, E-Trans, Evidence, Fraud, CI, Consumer, Tax | 2 Direct / 0 Generic | `NEEDS_REVIEW` (Batch 3). StGB & BDSG indexed. Scheduled: BSIG (IT-Sicherheitsgesetz 2.0), StPO §§ 100a/b, TTDSG, NIS2 Implementation Act. |
 | **France** | `FR` | 2 | 0 | 2 | 2 / 9 | Cybersecurity, E-Trans, Evidence, Fraud, CI, Consumer, Tax | 2 Direct / 0 Generic | `NEEDS_REVIEW` (Batch 3). Code Pénal & Loi Informatique et Libertés indexed. Scheduled: LOPMI 2023 (cyber extortion 72h), CPP Art 706-102, CPCE. |
 | **Netherlands** | `NL` | 2 | 0 | 2 | 2 / 9 | Cybersecurity, E-Trans, Evidence, Fraud, CI, Consumer, Tax | 2 Direct / 0 Generic | `NEEDS_REVIEW` (Batch 3). Wetboek van Strafrecht & UAVG indexed. Scheduled: Wet beveiliging netwerk- en informatiesystemen (Wbni), Wet computercriminaliteit III. |

@@ -154,8 +154,8 @@ async function validateDatabase() {
         seenOfficialUrls.set(urlKey, existing)
       }
 
-      // Invalid Dates
-      if (!inst.yearEnacted || inst.yearEnacted < 1900 || inst.yearEnacted > new Date().getFullYear() + 2) {
+      // Invalid Dates (allow foundational in-force statutes from 1800 onwards, e.g. Singapore Evidence Act 1893)
+      if (!inst.yearEnacted || inst.yearEnacted < 1800 || inst.yearEnacted > new Date().getFullYear() + 2) {
         issues.push({
           severity: 'ERROR',
           category: 'Invalid Date',
