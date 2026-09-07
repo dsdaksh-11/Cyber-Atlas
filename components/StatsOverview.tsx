@@ -7,6 +7,7 @@ interface StatsProps {
   countryCount?: number
   lawCount?: number
   instrumentCount?: number
+  verifiedCount?: number
   coverageCount?: number
 }
 
@@ -14,9 +15,11 @@ export function StatsOverview({
   countryCount = 48,
   lawCount = 112,
   instrumentCount,
+  verifiedCount = 34,
   coverageCount = 432,
 }: StatsProps) {
   const displayInstruments = instrumentCount ?? lawCount
+  const underReviewCount = Math.max(0, displayInstruments - verifiedCount)
 
   const stats = [
     {
@@ -30,7 +33,7 @@ export function StatsOverview({
       icon: BookOpen,
       label: 'Documented Instruments',
       value: displayInstruments,
-      subtext: '15 verified, 109 baseline under review',
+      subtext: `${verifiedCount} verified, ${underReviewCount} baseline under review`,
       color: 'text-blue-400',
     },
     {

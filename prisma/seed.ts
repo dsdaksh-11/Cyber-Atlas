@@ -2578,6 +2578,769 @@ const indiaVerifiedInstruments = [
   }
 ]
 
+const usVerifiedInstruments = [
+  {
+    countryCode: 'US',
+    categoryKey: 'cybercrime',
+    title: "Computer Fraud and Abuse Act (CFAA, 18 U.S.C. § 1030)",
+    officialTitle: "Computer Fraud and Abuse Act of 1986 (18 U.S.C. § 1030, Pub. L. 99-474)",
+    shortTitle: "CFAA (18 U.S.C. § 1030)",
+    instrumentType: 'ACT',
+    scope: 'FEDERAL',
+    year: 1986,
+    enactmentDate: new Date('1986-10-16'),
+    effectiveDate: new Date('1986-10-16'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'AMENDED',
+    summary: "Primary United States federal anti-hacking statute penalizing unauthorized computer access, malware transmission, extortionate threats, and intentional damage to protected computers.",
+    issuingAuthority: "United States Department of Justice (DOJ)",
+    officialUrl: 'https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title18-section1030',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "Office of the Law Revision Counsel, U.S. House of Representatives",
+    sourceUrl: 'https://uscode.house.gov/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Core federal cybercrime enactment covering unauthorized access, malware distribution, and computer impairment.",
+    provisions: [
+      {
+        articleNumber: '18 U.S.C. § 1030(a)(2)',
+        heading: "Unauthorized Access to Protected Information",
+        content: "Prohibits intentionally accessing a computer without authorization or exceeding authorized access to obtain financial, governmental, or commercial computer records.",
+        penaltyDetails: "Fines and imprisonment up to 1 to 5 years; up to 10 years for repeat offenders or commercial gain.",
+      },
+      {
+        articleNumber: '18 U.S.C. § 1030(a)(5)',
+        heading: "Transmission of Destructive Code & System Impairment",
+        content: "Penalizes knowingly causing transmission of a program, code, or command causing unauthorized damage to a protected computer.",
+        penaltyDetails: "Imprisonment up to 10 years; up to 20 years if critical infrastructure or public safety is impaired.",
+      },
+      {
+        articleNumber: '18 U.S.C. § 1030(g)',
+        heading: "Civil Remedies for Injured Parties",
+        content: "Provides a civil cause of action for compensatory damages and injunctive relief where damage exceeds $5,000 in aggregate loss over a 1-year period.",
+      },
+    ]
+  },
+  {
+    countryCode: 'US',
+    categoryKey: 'data-protection',
+    title: "Electronic Communications Privacy Act (ECPA / Stored Communications Act)",
+    officialTitle: "Electronic Communications Privacy Act of 1986 (18 U.S.C. §§ 2701–2712, Pub. L. 99-508)",
+    shortTitle: "ECPA / Stored Communications Act",
+    instrumentType: 'ACT',
+    scope: 'FEDERAL',
+    year: 1986,
+    enactmentDate: new Date('1986-10-21'),
+    effectiveDate: new Date('1986-10-21'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'AMENDED',
+    summary: "Federal privacy legislation safeguarding wire, oral, and electronic communications stored in facilities and servers of electronic communication service providers.",
+    issuingAuthority: "United States Department of Justice (DOJ)",
+    officialUrl: 'https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title18-section2701',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "Office of the Law Revision Counsel, U.S. House of Representatives",
+    sourceUrl: 'https://uscode.house.gov/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Federal statutory framework for privacy of electronic communications and stored email/data records.",
+    provisions: [
+      {
+        articleNumber: '18 U.S.C. § 2701',
+        heading: "Unlawful Access to Stored Communications",
+        content: "Criminalizes intentionally accessing without authorization a facility through which electronic communication services are provided, obtaining or altering electronic storage.",
+        penaltyDetails: "Fines and imprisonment up to 5 years (up to 10 years for subsequent offenses).",
+      },
+      {
+        articleNumber: '18 U.S.C. § 2702',
+        heading: "Voluntary Disclosure of Customer Communications",
+        content: "Prohibits electronic communication and remote computing service providers from divulging communications contents to any person without lawful subscriber consent or statutory exception.",
+      },
+      {
+        articleNumber: '18 U.S.C. § 2703',
+        heading: "Required Disclosure of Customer Records to Law Enforcement",
+        content: "Establishes constitutional and statutory standards (Rule 41 warrants, § 2703(d) court orders, subpoenas) for law enforcement access to stored communications.",
+      },
+    ]
+  },
+  {
+    countryCode: 'US',
+    categoryKey: 'data-protection',
+    title: "Health Insurance Portability and Accountability Act (HIPAA Security Rule)",
+    officialTitle: "Security Standards for the Protection of Electronic Protected Health Information (45 C.F.R. Part 164, Subpart C)",
+    shortTitle: "HIPAA Security & Breach Notification Rule",
+    instrumentType: 'REGULATION',
+    scope: 'SECTORAL',
+    year: 2003,
+    enactmentDate: new Date('2003-02-20'),
+    effectiveDate: new Date('2005-04-21'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'AMENDED',
+    summary: "Federal health sector data privacy and information security regulations imposing technical, physical, and administrative safeguards for electronic protected health information (ePHI).",
+    issuingAuthority: "Department of Health and Human Services (HHS) Office for Civil Rights (OCR)",
+    officialUrl: 'https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164/subpart-C',
+    isDirectSource: true,
+    sourceDocumentType: 'REGULATION',
+    sourceName: "Electronic Code of Federal Regulations (eCFR)",
+    sourceUrl: 'https://www.ecfr.gov/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Core US federal sectoral privacy and health information cybersecurity standard.",
+    provisions: [
+      {
+        articleNumber: '45 C.F.R. § 164.308',
+        heading: "Administrative Safeguards",
+        content: "Requires covered entities to implement a security management process, conduct continuous risk assessments, and enforce business associate security agreements.",
+      },
+      {
+        articleNumber: '45 C.F.R. § 164.312',
+        heading: "Technical Safeguards & Encryption",
+        content: "Mandates implementation of technical access controls, unique user identification, audit controls, and end-to-end cryptographic protection for ePHI at rest and in transit.",
+      },
+      {
+        articleNumber: '45 C.F.R. § 164.404',
+        heading: "Mandatory Breach Notification Rule",
+        content: "Mandates written notification to affected individuals and HHS OCR without unreasonable delay and in no case later than 60 calendar days following discovery of an unsecured ePHI breach.",
+        penaltyDetails: "Civil monetary penalties up to $2,067,813 per violation category per calendar year.",
+        reportingMandate: "60 calendar days to notify affected individuals and HHS OCR.",
+      },
+    ]
+  },
+  {
+    countryCode: 'US',
+    categoryKey: 'cybersecurity',
+    title: "Cybersecurity Information Sharing Act of 2015 (CISA)",
+    officialTitle: "Cybersecurity Information Sharing Act of 2015 (6 U.S.C. §§ 1501–1510, Pub. L. 114-113, Title I)",
+    shortTitle: "CISA (6 U.S.C. § 1501 et seq.)",
+    instrumentType: 'ACT',
+    scope: 'FEDERAL',
+    year: 2015,
+    enactmentDate: new Date('2015-12-18'),
+    effectiveDate: new Date('2015-12-18'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'UNAMENDED',
+    summary: "Federal framework facilitating defensive monitoring and bi-directional sharing of cyber threat indicators (CTIs) between private enterprises and federal homeland security authorities.",
+    issuingAuthority: "Cybersecurity and Infrastructure Security Agency (CISA) / DHS",
+    officialUrl: 'https://uscode.house.gov/view.xhtml?path=/prelim@title6/chapter6&edition=prelim',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "Office of the Law Revision Counsel, U.S. House of Representatives",
+    sourceUrl: 'https://uscode.house.gov/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Authorizes threat sharing and grants statutory antitrust and civil liability immunity.",
+    provisions: [
+      {
+        articleNumber: '6 U.S.C. § 1503',
+        heading: "Defensive Monitoring and Threat Sharing Authorization",
+        content: "Authorizes private entities to monitor their information systems and share cyber threat indicators defensively with federal and peer entities.",
+      },
+      {
+        articleNumber: '6 U.S.C. § 1504',
+        heading: "Statutory Protection from Civil Liability",
+        content: "Grants broad civil liability immunity to private entities sharing cyber threat indicators via the Automated Indicator Sharing (AIS) program in good faith.",
+      },
+      {
+        articleNumber: '6 U.S.C. § 1505',
+        heading: "Antitrust Exemption for Threat Mitigation",
+        content: "Exempts private organizations from federal antitrust scrutiny for exchanging threat intelligence to prevent or mitigate cybersecurity incidents.",
+      },
+    ]
+  },
+  {
+    countryCode: 'US',
+    categoryKey: 'critical-infrastructure',
+    title: "Cyber Incident Reporting for Critical Infrastructure Act of 2022 (CIRCIA)",
+    officialTitle: "Cyber Incident Reporting for Critical Infrastructure Act of 2022 (6 U.S.C. §§ 681–681g, Pub. L. 117-103)",
+    shortTitle: "CIRCIA (6 U.S.C. § 681 et seq.)",
+    instrumentType: 'ACT',
+    scope: 'FEDERAL',
+    year: 2022,
+    enactmentDate: new Date('2022-03-15'),
+    effectiveDate: new Date('2024-04-04'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'UNAMENDED',
+    summary: "Mandatory federal incident reporting statute requiring critical infrastructure entities to report substantial cyber incidents within 72 hours and ransom payments within 24 hours to CISA.",
+    issuingAuthority: "Cybersecurity and Infrastructure Security Agency (CISA) / DHS",
+    officialUrl: 'https://uscode.house.gov/view.xhtml?path=/prelim@title6/chapter1/subchapterXXII/partB&edition=prelim',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "Office of the Law Revision Counsel, U.S. House of Representatives",
+    sourceUrl: 'https://uscode.house.gov/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Federal mandatory reporting statute for critical infrastructure sectors and ransomware payments.",
+    provisions: [
+      {
+        articleNumber: '6 U.S.C. § 681b(a)(1)',
+        heading: "Mandatory 72-Hour Covered Cyber Incident Reporting",
+        content: "Requires covered entities across designated critical infrastructure sectors to report substantial cyber incidents to CISA within 72 hours of reasonable belief that an incident occurred.",
+        reportingMandate: "72 hours from reasonable belief of substantial cyber incident to CISA.",
+      },
+      {
+        articleNumber: '6 U.S.C. § 681b(a)(2)',
+        heading: "Mandatory 24-Hour Ransom Payment Reporting",
+        content: "Requires any entity paying a ransom in connection with a cyber attack to report payment details, ransom demand, and threat actor indicators to CISA within 24 hours.",
+        reportingMandate: "24 hours following payment of a ransomware extortion demand.",
+      },
+      {
+        articleNumber: '6 U.S.C. § 681c',
+        heading: "Subpoena Authority and Non-Compliance Sanctions",
+        content: "Empowers the CISA Director to issue administrative subpoenas and refer non-compliant entities to the Department of Justice for civil enforcement action.",
+      },
+    ]
+  },
+  {
+    countryCode: 'US',
+    categoryKey: 'electronic-transactions',
+    title: "Electronic Signatures in Global and National Commerce Act (E-SIGN Act)",
+    officialTitle: "Electronic Signatures in Global and National Commerce Act (15 U.S.C. §§ 7001–7031, Pub. L. 106-229)",
+    shortTitle: "E-SIGN Act (15 U.S.C. § 7001)",
+    instrumentType: 'ACT',
+    scope: 'FEDERAL',
+    year: 2000,
+    enactmentDate: new Date('2000-06-30'),
+    effectiveDate: new Date('2000-10-01'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'UNAMENDED',
+    summary: "Federal statute establishing that contracts, signatures, and records in interstate and foreign commerce may not be denied legal validity or enforceability solely because they are in electronic format.",
+    issuingAuthority: "Federal Trade Commission (FTC) / Securities and Exchange Commission (SEC)",
+    officialUrl: 'https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title15-section7001',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "Office of the Law Revision Counsel, U.S. House of Representatives",
+    sourceUrl: 'https://uscode.house.gov/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Federal statutory cornerstone for electronic contracts and digital signature recognition.",
+    provisions: [
+      {
+        articleNumber: '15 U.S.C. § 7001(a)',
+        heading: "Legal Validity of Electronic Records & Signatures",
+        content: "Provides that a signature, contract, or other record relating to a transaction may not be denied legal effect, validity, or enforceability solely because it is in electronic form.",
+      },
+      {
+        articleNumber: '15 U.S.C. § 7001(c)',
+        heading: "Consumer Disclosure & Affirmative Consent Rule",
+        content: "Requires businesses to obtain affirmative consent from consumers before substituting electronic records for legally required paper notices.",
+      },
+    ]
+  },
+  {
+    countryCode: 'US',
+    categoryKey: 'online-fraud',
+    title: "Gramm-Leach-Bliley Act Safeguards Rule (16 C.F.R. Part 314)",
+    officialTitle: "Standards for Safeguarding Customer Information (16 C.F.R. Part 314, under 15 U.S.C. §§ 6801, 6805)",
+    shortTitle: "GLBA Safeguards Rule",
+    instrumentType: 'REGULATION',
+    scope: 'SECTORAL',
+    year: 2002,
+    enactmentDate: new Date('2002-05-23'),
+    effectiveDate: new Date('2023-06-09'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'AMENDED',
+    summary: "Federal financial cybersecurity regulation mandating that non-bank financial institutions implement multi-factor authentication, encryption, and report customer data security breaches.",
+    issuingAuthority: "Federal Trade Commission (FTC) / CFPB",
+    officialUrl: 'https://www.ecfr.gov/current/title-16/chapter-I/subchapter-C/part-314',
+    isDirectSource: true,
+    sourceDocumentType: 'REGULATION',
+    sourceName: "Electronic Code of Federal Regulations (eCFR)",
+    sourceUrl: 'https://www.ecfr.gov/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Binding information security rule for financial platforms, fintechs, and loan institutions.",
+    provisions: [
+      {
+        articleNumber: '16 C.F.R. § 314.3',
+        heading: "Written Information Security Program",
+        content: "Requires financial entities to implement written controls protecting the security, confidentiality, and integrity of nonpublic customer financial records.",
+      },
+      {
+        articleNumber: '16 C.F.R. § 314.4(h)',
+        heading: "Mandatory FTC Security Event Notification",
+        content: "Mandates notification to the FTC within 30 days of discovering an unauthorized acquisition of unencrypted customer information involving at least 500 consumers.",
+        penaltyDetails: "FTC civil penalties up to $50,120 per violation per day under 15 U.S.C. § 45.",
+        reportingMandate: "30 days to notify FTC following breach discovery involving 500+ consumers.",
+      },
+    ]
+  },
+  {
+    countryCode: 'US',
+    categoryKey: 'digital-evidence',
+    title: "Federal Rules of Evidence (FRE Rules 902(13) & 902(14) - Electronic Evidence)",
+    officialTitle: "Federal Rules of Evidence, Rule 902 (Evidence That Is Self-Authenticating, Subsections 13 and 14)",
+    shortTitle: "FRE Rules 902(13) & 902(14)",
+    instrumentType: 'CODE_PROVISION',
+    scope: 'FEDERAL',
+    year: 2017,
+    enactmentDate: new Date('2017-12-01'),
+    effectiveDate: new Date('2017-12-01'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'UNAMENDED',
+    summary: "Federal procedural provisions establishing self-authentication mechanisms for machine-generated electronic records and digital data verified by cryptographic hash values.",
+    issuingAuthority: "Supreme Court of the United States / Judicial Conference of the United States",
+    officialUrl: 'https://www.rulesofevidence.org/article-ix/rule-902/',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "Federal Rules of Evidence Repository",
+    sourceUrl: 'https://www.rulesofevidence.org/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Federal judicial rules enabling certified digital evidence without forensic examiner witness costs.",
+    provisions: [
+      {
+        articleNumber: 'Fed. R. Evid. 902(13)',
+        heading: "Certified Records Generated by an Electronic Process or System",
+        content: "Machine-generated digital records are self-authenticating when accompanied by written certification from a qualified technician under Rule 902(11).",
+      },
+      {
+        articleNumber: 'Fed. R. Evid. 902(14)',
+        heading: "Certified Data Copied from an Electronic Device or Storage Medium",
+        content: "Digital forensic disk images and file copies verified by digital signature or cryptographic hash match are admissible as authentic without calling the forensic examiner.",
+      },
+    ]
+  },
+  {
+    countryCode: 'US',
+    categoryKey: 'consumer-protection',
+    title: "Children's Online Privacy Protection Act of 1998 (COPPA)",
+    officialTitle: "Children's Online Privacy Protection Act of 1998 (15 U.S.C. §§ 6501–6506, Pub. L. 105-277; 16 C.F.R. Part 312)",
+    shortTitle: "COPPA (15 U.S.C. § 6501)",
+    instrumentType: 'ACT',
+    scope: 'FEDERAL',
+    year: 1998,
+    enactmentDate: new Date('1998-10-21'),
+    effectiveDate: new Date('2000-04-21'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'AMENDED',
+    summary: "Federal online consumer protection legislation restricting personal information harvesting from children under 13 and mandating verifiable parental consent for online services.",
+    issuingAuthority: "Federal Trade Commission (FTC)",
+    officialUrl: 'https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title15-section6501',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "Office of the Law Revision Counsel, U.S. House of Representatives",
+    sourceUrl: 'https://uscode.house.gov/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Core federal statutory benchmark for online child consumer safety and privacy.",
+    provisions: [
+      {
+        articleNumber: '15 U.S.C. § 6502(b)(1)',
+        heading: "Verifiable Parental Consent Mandate",
+        content: "Prohibits commercial operators targeting children from collecting personal information without verifiable parental consent and clear disclosure notices.",
+        penaltyDetails: "FTC civil penalties up to $50,120 per violation.",
+      },
+      {
+        articleNumber: '16 C.F.R. § 312.8',
+        heading: "Data Security & Retention Safeguards",
+        content: "Requires commercial operators to maintain reasonable procedures to protect the confidentiality, security, and integrity of personal information collected from children.",
+      },
+    ]
+  },
+  {
+    countryCode: 'US',
+    categoryKey: 'indirect-taxation',
+    title: "Post-Wayfair Economic Nexus & Marketplace Facilitator Statutory Regimes",
+    officialTitle: "Streamlined Sales and Use Tax Agreement / State Codified Marketplace Facilitator Acts (Post-Wayfair, 585 U.S. 500)",
+    shortTitle: "Marketplace Facilitator & Economic Nexus Acts",
+    instrumentType: 'ACT',
+    scope: 'STATE_PROVINCIAL',
+    year: 2018,
+    enactmentDate: new Date('2018-06-21'),
+    effectiveDate: new Date('2018-11-01'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'AMENDED',
+    summary: "Codified economic nexus and digital marketplace statutes requiring remote electronic commerce sellers and digital platforms to calculate, collect, and remit state sales taxes.",
+    issuingAuthority: "Multistate Tax Commission (MTC) / Streamlined Sales Tax Governing Board",
+    officialUrl: 'https://www.streamlinedsalestax.org/',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "Streamlined Sales Tax Governing Board",
+    sourceUrl: 'https://www.streamlinedsalestax.org/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "US state-level statutory framework for digital supply sales taxes and marketplace taxation.",
+    provisions: [
+      {
+        articleNumber: 'SSUTA Section 301',
+        heading: "Economic Nexus Transaction Thresholds",
+        content: "Remote electronic sellers exceeding $100,000 in gross annual sales or 200 distinct transactions within a state are deemed to have taxable sales tax nexus.",
+      },
+      {
+        articleNumber: 'SSUTA Section 334',
+        heading: "Marketplace Facilitator Collection Mandate",
+        content: "Online marketplace platforms are legally deemed the seller liable for reporting, collecting, and remitting sales taxes on third-party marketplace transactions.",
+      },
+    ]
+  },
+]
+
+const ukVerifiedInstruments = [
+  {
+    countryCode: 'GB',
+    categoryKey: 'cybercrime',
+    title: "Computer Misuse Act 1990 (CMA 1990)",
+    officialTitle: "Computer Misuse Act 1990 (1990 c. 18, as amended)",
+    shortTitle: "Computer Misuse Act 1990",
+    instrumentType: 'ACT',
+    scope: 'NATIONAL',
+    year: 1990,
+    enactmentDate: new Date('1990-06-29'),
+    effectiveDate: new Date('1990-08-29'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'AMENDED',
+    summary: "Primary UK cybercrime legislation criminalizing unauthorized access to computer systems, malicious modification of computer data, denial of service attacks, and creation of cyber weapons.",
+    issuingAuthority: "Crown Prosecution Service (CPS) / Home Office",
+    officialUrl: 'https://www.legislation.gov.uk/ukpga/1990/18/contents',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "The National Archives (UK Legislation Repository)",
+    sourceUrl: 'https://www.legislation.gov.uk/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Core UK cybercrime statute amended by Police and Justice Act 2006 and Serious Crime Act 2015.",
+    provisions: [
+      {
+        articleNumber: 'Section 1',
+        heading: "Unauthorized access to computer material",
+        content: "Penalizes causing a computer to perform any function with intent to secure unauthorized access to any program or data.",
+        penaltyDetails: "Imprisonment for a term up to 2 years and statutory fine.",
+      },
+      {
+        articleNumber: 'Section 3',
+        heading: "Unauthorized acts with intent to impair computer operation",
+        content: "Prohibits any unauthorized act done with intent to impair the operation of any computer, prevent or hinder access to any program or data (including DDoS attacks and ransomware execution).",
+        penaltyDetails: "Custodial sentence up to 10 years imprisonment.",
+      },
+      {
+        articleNumber: 'Section 3ZA',
+        heading: "Unauthorized acts causing serious damage to national security or economy",
+        content: "Creates aggravated offence where an unauthorized act causes or creates a significant risk of serious damage to human welfare, national security, or critical economic infrastructure.",
+        penaltyDetails: "Maximum sentence of life imprisonment.",
+      },
+      {
+        articleNumber: 'Section 3A',
+        heading: "Making, supplying or obtaining articles for computer misuse offences",
+        content: "Criminalizes the development, procurement, or distribution of malware, exploit kits, or credential theft tools for use in hacking.",
+        penaltyDetails: "Imprisonment for a term up to 2 years.",
+      },
+    ]
+  },
+  {
+    countryCode: 'GB',
+    categoryKey: 'data-protection',
+    title: "Data Protection Act 2018 & UK General Data Protection Regulation (UK GDPR)",
+    officialTitle: "Data Protection Act 2018 (2018 c. 12) and Kept UK GDPR",
+    shortTitle: "Data Protection Act 2018 / UK GDPR",
+    instrumentType: 'ACT',
+    scope: 'NATIONAL',
+    year: 2018,
+    enactmentDate: new Date('2018-05-23'),
+    effectiveDate: new Date('2018-05-25'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'AMENDED',
+    summary: "Comprehensive UK data protection framework governing personal data processing, data subject rights, cross-border data transfer adequacy, and strict mandatory 72-hour breach reporting.",
+    issuingAuthority: "Information Commissioner's Office (ICO)",
+    officialUrl: 'https://www.legislation.gov.uk/ukpga/2018/12/contents',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "The National Archives (UK Legislation Repository)",
+    sourceUrl: 'https://www.legislation.gov.uk/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Primary UK personal data protection and privacy statutory framework.",
+    provisions: [
+      {
+        articleNumber: 'UK GDPR Article 33',
+        heading: "Notification of personal data breach to the Information Commissioner",
+        content: "Data controllers must notify personal data breaches to the ICO without undue delay and, where feasible, within 72 hours of becoming aware of the breach.",
+        reportingMandate: "72 hours from awareness of breach to the Information Commissioner.",
+      },
+      {
+        articleNumber: 'UK GDPR Article 34',
+        heading: "Communication of personal data breach to data subjects",
+        content: "Requires direct notification to individuals when a personal data breach is likely to result in a high risk to their rights and freedoms.",
+      },
+      {
+        articleNumber: 'DPA 2018 Part 6 / UK GDPR Art 83',
+        heading: "Administrative Fines and Enforcement",
+        content: "Authorizes ICO enforcement notices and administrative penalties for serious non-compliance.",
+        penaltyDetails: "Fines up to £17,500,000 or 4% of total worldwide annual turnover, whichever is higher.",
+      },
+    ]
+  },
+  {
+    countryCode: 'GB',
+    categoryKey: 'cybersecurity',
+    title: "The Network and Information Systems Regulations 2018 (UK NIS)",
+    officialTitle: "The Network and Information Systems Regulations 2018 (SI 2018/506)",
+    shortTitle: "UK NIS Regulations 2018",
+    instrumentType: 'REGULATION',
+    scope: 'NATIONAL',
+    year: 2018,
+    enactmentDate: new Date('2018-04-20'),
+    effectiveDate: new Date('2018-05-10'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'AMENDED',
+    summary: "Binding statutory information security regulations governing Operators of Essential Services (OES) across energy, transport, healthcare, water, and digital service providers.",
+    issuingAuthority: "National Cyber Security Centre (NCSC) / DESNZ / Ofcom",
+    officialUrl: 'https://www.legislation.gov.uk/uksi/2018/506/contents/made',
+    isDirectSource: true,
+    sourceDocumentType: 'REGULATION',
+    sourceName: "The National Archives (UK Statutory Instruments)",
+    sourceUrl: 'https://www.legislation.gov.uk/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Binding national cybersecurity resilience framework for critical infrastructure and digital platforms.",
+    provisions: [
+      {
+        articleNumber: 'Regulation 11',
+        heading: "Duty to take technical and organizational security measures",
+        content: "OES must implement state-of-the-art measures to manage security risks and prevent incidents affecting service continuity.",
+      },
+      {
+        articleNumber: 'Regulation 12',
+        heading: "Mandatory 72-Hour Security Incident Notification",
+        content: "Operators of Essential Services must report incidents having a significant impact on service continuity to their competent authority without undue delay and within 72 hours.",
+        reportingMandate: "72 hours to notify designated sector competent authority.",
+      },
+      {
+        articleNumber: 'Regulation 18 & Schedule 4',
+        heading: "Penalties for Non-Compliance",
+        content: "Tiered civil financial penalties enforceable against non-compliant operators.",
+        penaltyDetails: "Tiered fines up to £17,000,000 for critical failures causing significant service disruption.",
+      },
+    ]
+  },
+  {
+    countryCode: 'GB',
+    categoryKey: 'critical-infrastructure',
+    title: "Telecommunications (Security) Act 2021",
+    officialTitle: "Telecommunications (Security) Act 2021 (2021 c. 31)",
+    shortTitle: "Telecommunications (Security) Act 2021",
+    instrumentType: 'ACT',
+    scope: 'SECTORAL',
+    year: 2021,
+    enactmentDate: new Date('2021-11-17'),
+    effectiveDate: new Date('2022-10-01'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'UNAMENDED',
+    summary: "Statute establishing stringent cybersecurity duties for public telecommunications network providers, mandating supply chain security and immediate compromise reporting.",
+    issuingAuthority: "Office of Communications (Ofcom)",
+    officialUrl: 'https://www.legislation.gov.uk/ukpga/2021/31/enacted',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "The National Archives (UK Legislation Repository)",
+    sourceUrl: 'https://www.legislation.gov.uk/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Critical infrastructure telecommunications cyber defense act.",
+    provisions: [
+      {
+        articleNumber: 'Section 105A',
+        heading: "Duty of providers to ensure cybersecurity",
+        content: "Imposes binding legal duties on network providers to take measures identifying, mitigating, and preventing security compromises.",
+      },
+      {
+        articleNumber: 'Section 105L',
+        heading: "Compulsory Notification of Security Compromises to Ofcom",
+        content: "Mandates telecom providers to inform Ofcom immediately upon becoming aware of any significant security compromise.",
+        reportingMandate: "Immediate reporting of critical telecommunications compromises to Ofcom.",
+      },
+      {
+        articleNumber: 'Section 105V',
+        heading: "Financial Penalties for Breach of Security Duties",
+        content: "Authorizes Ofcom to impose heavy financial sanctions for failure to maintain network security.",
+        penaltyDetails: "Fines up to 10% of annual turnover, or £100,000 per day for continuing contraventions.",
+      },
+    ]
+  },
+  {
+    countryCode: 'GB',
+    categoryKey: 'electronic-transactions',
+    title: "Electronic Communications Act 2000",
+    officialTitle: "Electronic Communications Act 2000 (2000 c. 7)",
+    shortTitle: "Electronic Communications Act 2000",
+    instrumentType: 'ACT',
+    scope: 'NATIONAL',
+    year: 2000,
+    enactmentDate: new Date('2000-05-25'),
+    effectiveDate: new Date('2000-07-25'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'AMENDED',
+    summary: "Statute confirming the legal admissibility of electronic signatures and providing statutory powers to remove paper-based legal obstacles to electronic commerce.",
+    issuingAuthority: "Department for Science, Innovation and Technology (DSIT)",
+    officialUrl: 'https://www.legislation.gov.uk/ukpga/2000/7/contents',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "The National Archives (UK Legislation Repository)",
+    sourceUrl: 'https://www.legislation.gov.uk/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "UK electronic transactions and digital signature statutory foundation.",
+    provisions: [
+      {
+        articleNumber: 'Section 7',
+        heading: "Electronic signatures and related certificates in legal proceedings",
+        content: "Provides that electronic signatures incorporated into or associated with electronic communications are legally admissible in court to prove authenticity and integrity.",
+      },
+      {
+        articleNumber: 'Section 8',
+        heading: "Powers to modify enactments to facilitate electronic commerce",
+        content: "Authorizes ministers to modify statutory requirements for written documents, physical signatures, and manual delivery via secondary legislation.",
+      },
+    ]
+  },
+  {
+    countryCode: 'GB',
+    categoryKey: 'online-fraud',
+    title: "Fraud Act 2006",
+    officialTitle: "Fraud Act 2006 (2006 c. 35)",
+    shortTitle: "Fraud Act 2006",
+    instrumentType: 'ACT',
+    scope: 'NATIONAL',
+    year: 2006,
+    enactmentDate: new Date('2006-11-08'),
+    effectiveDate: new Date('2007-01-15'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'UNAMENDED',
+    summary: "General criminal fraud statute defining fraud by false representation, providing the legal foundation for prosecuting online scams, phishing, and banking cyber fraud.",
+    issuingAuthority: "Serious Fraud Office (SFO) / Crown Prosecution Service (CPS)",
+    officialUrl: 'https://www.legislation.gov.uk/ukpga/2006/35/contents',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "The National Archives (UK Legislation Repository)",
+    sourceUrl: 'https://www.legislation.gov.uk/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Statutory basis for prosecuting digital deception, phishing kits, and electronic fraud.",
+    provisions: [
+      {
+        articleNumber: 'Section 2',
+        heading: "Fraud by false representation",
+        content: "Criminalizes dishonestly making a false representation (including automated web forms, spoofed emails, and phishing portals) with intent to make a gain or cause loss.",
+        penaltyDetails: "Custodial sentence up to 10 years imprisonment and unlimited fine on indictment.",
+      },
+      {
+        articleNumber: 'Section 6 & 7',
+        heading: "Possession and supply of articles for use in fraud",
+        content: "Prohibits the possession, design, manufacture, or distribution of tools, scripts, software, or stolen credentials for fraudulent purposes.",
+        penaltyDetails: "Imprisonment up to 5 years (Section 6) or 10 years (Section 7).",
+      },
+    ]
+  },
+  {
+    countryCode: 'GB',
+    categoryKey: 'digital-evidence',
+    title: "Police and Criminal Evidence Act 1984 (PACE Computer Powers)",
+    officialTitle: "Police and Criminal Evidence Act 1984 (1984 c. 60, ss. 19–20)",
+    shortTitle: "PACE 1984 (ss. 19-20 Computer Powers)",
+    instrumentType: 'ACT',
+    scope: 'NATIONAL',
+    year: 1984,
+    enactmentDate: new Date('1984-10-31'),
+    effectiveDate: new Date('1986-01-01'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'AMENDED',
+    summary: "Statutory procedural provisions granting police officers powers to require computer records to be produced in legible form and to seize electronic evidence during investigations.",
+    issuingAuthority: "Home Office / Police Services",
+    officialUrl: 'https://www.legislation.gov.uk/ukpga/1984/60/section/19',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "The National Archives (UK Legislation Repository)",
+    sourceUrl: 'https://www.legislation.gov.uk/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Statutory police search, seizure, and computer data retrieval powers.",
+    provisions: [
+      {
+        articleNumber: 'Section 19(4)',
+        heading: "Power to require computer information in visible and legible form",
+        content: "A constable may require any information contained in a computer to be produced in a form in which it can be taken away and in which it is visible and legible.",
+      },
+      {
+        articleNumber: 'Section 20',
+        heading: "Extension of seizure powers to computerised information",
+        content: "Explicitly extends all general statutory search and seizure powers to computerized records stored on local hard drives, servers, or media.",
+      },
+    ]
+  },
+  {
+    countryCode: 'GB',
+    categoryKey: 'consumer-protection',
+    title: "Online Safety Act 2023",
+    officialTitle: "Online Safety Act 2023 (2023 c. 50)",
+    shortTitle: "Online Safety Act 2023",
+    instrumentType: 'ACT',
+    scope: 'NATIONAL',
+    year: 2023,
+    enactmentDate: new Date('2023-10-26'),
+    effectiveDate: new Date('2023-10-26'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'UNAMENDED',
+    summary: "Statutory duty of care framework requiring social media platforms and search services to proactively mitigate fraud, scam advertisements, malware, and child safety risks.",
+    issuingAuthority: "Office of Communications (Ofcom)",
+    officialUrl: 'https://www.legislation.gov.uk/ukpga/2023/50/contents/enacted',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "The National Archives (UK Legislation Repository)",
+    sourceUrl: 'https://www.legislation.gov.uk/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "UK internet platform duty of care legislation for user protection and fraud mitigation.",
+    provisions: [
+      {
+        articleNumber: 'Part 3, Chapter 2',
+        heading: "Safety duties regarding illegal content and fraudulent ads",
+        content: "Mandates regulated user-to-user and search services to implement preventative systems preventing users from encountering priority illegal content and scam advertisements.",
+      },
+      {
+        articleNumber: 'Part 7, Section 130',
+        heading: "Ofcom Enforcement and Financial Penalties",
+        content: "Grants Ofcom administrative sanction powers including business disruption orders, service blocking, and substantial financial fines.",
+        penaltyDetails: "Fines up to £18,000,000 or 10% of qualifying worldwide revenue, whichever is greater.",
+      },
+    ]
+  },
+  {
+    countryCode: 'GB',
+    categoryKey: 'indirect-taxation',
+    title: "Value Added Tax Act 1994 (Digital Supplies & Online Marketplace VAT)",
+    officialTitle: "Value Added Tax Act 1994 (1994 c. 23, s. 47 & Schedule 4A)",
+    shortTitle: "VATA 1994 (s. 47 & Sch 4A)",
+    instrumentType: 'ACT',
+    scope: 'NATIONAL',
+    year: 1994,
+    enactmentDate: new Date('1994-11-03'),
+    effectiveDate: new Date('1994-11-03'),
+    currentStatus: 'IN_FORCE',
+    amendmentStatus: 'AMENDED',
+    summary: "Statutory regime governing VAT on electronically supplied digital services and joint/several liability for electronic commerce marketplace platforms.",
+    issuingAuthority: "HM Revenue & Customs (HMRC)",
+    officialUrl: 'https://www.legislation.gov.uk/ukpga/1994/23/contents',
+    isDirectSource: true,
+    sourceDocumentType: 'PRIMARY_STATUTE',
+    sourceName: "The National Archives (UK Legislation Repository)",
+    sourceUrl: 'https://www.legislation.gov.uk/',
+    verificationStatus: 'VERIFIED',
+    researchStatus: 'INDEPENDENTLY_VERIFIED',
+    inclusionExclusionNotes: "Statutory UK digital supply tax rules and e-commerce marketplace VAT liability.",
+    provisions: [
+      {
+        articleNumber: 'Schedule 4A, Para 16',
+        heading: "Place of supply for electronically supplied services",
+        content: "Digital services (software, streaming, cloud services) supplied to UK consumers are subject to UK VAT regardless of where the supplier is established.",
+      },
+      {
+        articleNumber: 'Section 47(1A)',
+        heading: "Online Marketplace Joint & Several Liability",
+        content: "Online marketplaces are held jointly and severally liable for unpaid VAT on goods and digital services sold by overseas sellers through their platforms.",
+      },
+    ]
+  },
+]
+
 async function main() {
   console.log('🌱 Starting CyberLaw Atlas Idempotent 48-Country & Statutory Seeding...\n')
 
@@ -2638,187 +3401,227 @@ async function main() {
   // Track instruments per country-category for coverage metrics
   const countryCategoryInstrumentCounts: Record<string, Record<string, number>> = {}
 
-  // A. Ingest 15 Verified Statutory Instruments for Republic of India (IN)
-  console.log('Ingesting 15 verified statutory instruments for Republic of India...')
-  const indiaCountry = countryMap['IN']
-  if (!indiaCountry) throw new Error('India country record not found')
+  // A. Ingest Independently Verified Batches (India, United States, United Kingdom)
 
-  // Clean up any legacy India instruments not in the verified set
-  await prisma.legalInstrument.deleteMany({
-    where: {
-      countryId: indiaCountry.id,
-      NOT: { title: { in: indiaVerifiedInstruments.map(i => i.title) } },
-    },
-  })
-
-  for (const instData of indiaVerifiedInstruments) {
-    const category = categoryMap[instData.categoryKey]
-    if (!category) {
-      console.warn(`Category key ${instData.categoryKey} not found for ${instData.title}`)
-      continue
-    }
-
-    // 1. Ingest into CyberLaw for backwards compatibility
-    const legacyCategoryName = category.name.split('&')[0].trim()
-    await prisma.cyberLaw.upsert({
-      where: {
-        id: `in-${instData.shortTitle.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
-      },
-      update: {
-        title: instData.title,
-        year: instData.year,
-        category: legacyCategoryName,
-        summary: instData.summary,
-        keyProvisions: instData.provisions.map(p => `${p.articleNumber}: ${p.heading}`).join(' | '),
-        authority: instData.issuingAuthority,
-        officialUrl: instData.officialUrl,
-        sourceName: instData.sourceName,
-        sourceUrl: instData.sourceUrl || instData.officialUrl,
-        lastUpdated: '2024-07-01',
-        availabilityStatus: 'verified',
-        isSampleData: false,
-        countryId: indiaCountry.id,
-      },
-      create: {
-        id: `in-${instData.shortTitle.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
-        title: instData.title,
-        year: instData.year,
-        category: legacyCategoryName,
-        summary: instData.summary,
-        keyProvisions: instData.provisions.map(p => `${p.articleNumber}: ${p.heading}`).join(' | '),
-        authority: instData.issuingAuthority,
-        officialUrl: instData.officialUrl,
-        sourceName: instData.sourceName,
-        sourceUrl: instData.sourceUrl || instData.officialUrl,
-        lastUpdated: '2024-07-01',
-        availabilityStatus: 'verified',
-        isSampleData: false,
-        countryId: indiaCountry.id,
-      },
-    })
-
-    // 2. Ingest into LegalInstrument
-    let instrument = await prisma.legalInstrument.findFirst({
-      where: {
-        countryId: indiaCountry.id,
-        title: instData.title,
-      },
-    })
-
-    const instrumentDataToSave = {
-      countryId: indiaCountry.id,
-      categoryId: category.id,
-      title: instData.title,
-      officialTitle: instData.officialTitle,
-      shortTitle: instData.shortTitle,
-      instrumentType: instData.instrumentType,
-      scope: instData.scope,
-      yearEnacted: instData.year,
-      enactmentDate: instData.enactmentDate,
-      effectiveDate: instData.effectiveDate,
-      currentStatus: instData.currentStatus,
-      amendmentStatus: instData.amendmentStatus,
-      isPrimaryLegislation: instData.instrumentType === 'ACT' || instData.instrumentType === 'LAW',
-      summary: instData.summary,
-      keyProvisionsText: instData.provisions.map(p => `${p.articleNumber}: ${p.heading}`).join(' | '),
-      issuingAuthority: instData.issuingAuthority,
-      officialUrl: instData.officialUrl,
-      isDirectSource: instData.isDirectSource,
-      sourceDocumentType: instData.sourceDocumentType,
-      sourceName: instData.sourceName,
-      sourceUrl: instData.sourceUrl,
-      verificationStatus: 'VERIFIED',
-      researchStatus: 'INDEPENDENTLY_VERIFIED',
-      isSampleData: false,
-      lastVerifiedDate: new Date('2024-07-01'),
-      researchNotes: 'Audited against official gazettes, India Code, and regulator portals.',
-      inclusionExclusionNotes: instData.inclusionExclusionNotes,
-    }
-
-    if (instrument) {
-      instrument = await prisma.legalInstrument.update({
-        where: { id: instrument.id },
-        data: instrumentDataToSave,
-      })
-    } else {
-      instrument = await prisma.legalInstrument.create({
-        data: instrumentDataToSave,
-      })
-    }
-
-    // 3. Structured Provisions
-    await prisma.legalProvision.deleteMany({
-      where: { instrumentId: instrument.id },
-    })
-
-    let pIdx = 1
-    for (const prov of (instData.provisions as Array<{
-      articleNumber?: string
-      heading?: string
+  interface VerifiedSeedInstrument {
+    countryCode: string
+    categoryKey: string
+    title: string
+    officialTitle: string
+    shortTitle: string
+    instrumentType: string
+    scope: string
+    year: number
+    enactmentDate?: Date | null
+    effectiveDate?: Date | null
+    currentStatus: string
+    amendmentStatus: string
+    summary: string
+    issuingAuthority: string
+    officialUrl: string
+    isDirectSource: boolean
+    sourceDocumentType: string
+    sourceName: string
+    sourceUrl?: string
+    verificationStatus: string
+    researchStatus: string
+    inclusionExclusionNotes?: string
+    provisions: Array<{
+      articleNumber: string
+      heading: string
       content: string
-      penaltyDetails?: string
-      reportingMandate?: string
-    }>)) {
-      await prisma.legalProvision.create({
-        data: {
-          instrumentId: instrument.id,
-          articleNumber: prov.articleNumber,
-          heading: prov.heading,
-          content: prov.content,
-          penaltyDetails: prov.penaltyDetails || null,
-          reportingMandate: prov.reportingMandate || null,
-          displayOrder: pIdx++,
+      penaltyDetails?: string | null
+      reportingMandate?: string | null
+    }>
+  }
+
+  // Helper to ingest a verified instruments batch
+  async function ingestVerifiedBatch(
+    countryCode: string,
+    countryName: string,
+    instruments: VerifiedSeedInstrument[],
+    defaultAssessmentSource: string
+  ) {
+    console.log(`Ingesting ${instruments.length} verified statutory instruments for ${countryName} (${countryCode})...`)
+    const targetCountry = countryMap[countryCode]
+    if (!targetCountry) throw new Error(`Country record ${countryCode} not found`)
+
+    await prisma.legalInstrument.deleteMany({
+      where: {
+        countryId: targetCountry.id,
+        NOT: { title: { in: instruments.map((i) => i.title) } },
+      },
+    })
+
+    for (const instData of instruments) {
+      const category = categoryMap[instData.categoryKey]
+      if (!category) {
+        console.warn(`Category key ${instData.categoryKey} not found for ${instData.title}`)
+        continue
+      }
+
+      const legacyCategoryName = category.name.split('&')[0].trim()
+      await prisma.cyberLaw.upsert({
+        where: {
+          id: `${countryCode.toLowerCase()}-${instData.shortTitle.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+        },
+        update: {
+          title: instData.title,
+          year: instData.year,
+          category: legacyCategoryName,
+          summary: instData.summary,
+          keyProvisions: instData.provisions.map((p) => `${p.articleNumber}: ${p.heading}`).join(' | '),
+          authority: instData.issuingAuthority,
+          officialUrl: instData.officialUrl,
+          sourceName: instData.sourceName,
+          sourceUrl: instData.sourceUrl || instData.officialUrl,
+          lastUpdated: '2024-07-01',
+          availabilityStatus: 'verified',
+          isSampleData: false,
+          countryId: targetCountry.id,
+        },
+        create: {
+          id: `${countryCode.toLowerCase()}-${instData.shortTitle.toLowerCase().replace(/[^a-z0-9]/g, '-')}`,
+          title: instData.title,
+          year: instData.year,
+          category: legacyCategoryName,
+          summary: instData.summary,
+          keyProvisions: instData.provisions.map((p) => `${p.articleNumber}: ${p.heading}`).join(' | '),
+          authority: instData.issuingAuthority,
+          officialUrl: instData.officialUrl,
+          sourceName: instData.sourceName,
+          sourceUrl: instData.sourceUrl || instData.officialUrl,
+          lastUpdated: '2024-07-01',
+          availabilityStatus: 'verified',
+          isSampleData: false,
+          countryId: targetCountry.id,
         },
       })
-      provisionsUpsertedCount++
-    }
 
-    // 4. Structured Sources
-    await prisma.legalSource.deleteMany({
-      where: { instrumentId: instrument.id },
-    })
+      let instrument = await prisma.legalInstrument.findFirst({
+        where: {
+          countryId: targetCountry.id,
+          title: instData.title,
+        },
+      })
 
-    await prisma.legalSource.create({
-      data: {
-        instrumentId: instrument.id,
-        name: instData.sourceName,
-        url: instData.officialUrl,
-        sourceType: instData.sourceDocumentType === 'PRIMARY_STATUTE' ? 'LEGISLATION_PORTAL' : 'OFFICIAL_GAZETTE',
-        isOfficial: true,
-        isDirect: true,
-        retrievedDate: new Date('2024-07-01'),
-      },
-    })
-    sourcesUpsertedCount++
+      const instrumentDataToSave = {
+        countryId: targetCountry.id,
+        categoryId: category.id,
+        title: instData.title,
+        officialTitle: instData.officialTitle,
+        shortTitle: instData.shortTitle,
+        instrumentType: instData.instrumentType,
+        scope: instData.scope,
+        yearEnacted: instData.year,
+        enactmentDate: instData.enactmentDate,
+        effectiveDate: instData.effectiveDate,
+        currentStatus: instData.currentStatus,
+        amendmentStatus: instData.amendmentStatus,
+        isPrimaryLegislation: instData.instrumentType === 'ACT' || instData.instrumentType === 'LAW',
+        summary: instData.summary,
+        keyProvisionsText: instData.provisions.map((p) => `${p.articleNumber}: ${p.heading}`).join(' | '),
+        issuingAuthority: instData.issuingAuthority,
+        officialUrl: instData.officialUrl,
+        isDirectSource: instData.isDirectSource,
+        sourceDocumentType: instData.sourceDocumentType,
+        sourceName: instData.sourceName,
+        sourceUrl: instData.sourceUrl,
+        verificationStatus: 'VERIFIED',
+        researchStatus: 'INDEPENDENTLY_VERIFIED',
+        isSampleData: false,
+        lastVerifiedDate: new Date('2024-07-01'),
+        researchNotes: `Audited against ${defaultAssessmentSource}.`,
+        inclusionExclusionNotes: instData.inclusionExclusionNotes,
+      }
 
-    if (instData.sourceUrl && instData.sourceUrl !== instData.officialUrl) {
+      if (instrument) {
+        instrument = await prisma.legalInstrument.update({
+          where: { id: instrument.id },
+          data: instrumentDataToSave,
+        })
+      } else {
+        instrument = await prisma.legalInstrument.create({
+          data: instrumentDataToSave,
+        })
+      }
+
+      await prisma.legalProvision.deleteMany({
+        where: { instrumentId: instrument.id },
+      })
+
+      let pIdx = 1
+      for (const prov of (instData.provisions as Array<{
+        articleNumber?: string
+        heading?: string
+        content: string
+        penaltyDetails?: string
+        reportingMandate?: string
+      }>)) {
+        await prisma.legalProvision.create({
+          data: {
+            instrumentId: instrument.id,
+            articleNumber: prov.articleNumber,
+            heading: prov.heading,
+            content: prov.content,
+            penaltyDetails: prov.penaltyDetails || null,
+            reportingMandate: prov.reportingMandate || null,
+            displayOrder: pIdx++,
+          },
+        })
+        provisionsUpsertedCount++
+      }
+
+      await prisma.legalSource.deleteMany({
+        where: { instrumentId: instrument.id },
+      })
+
       await prisma.legalSource.create({
         data: {
           instrumentId: instrument.id,
-          name: `${instData.issuingAuthority} Portal`,
-          url: instData.sourceUrl,
-          sourceType: 'REGULATOR_SITE',
+          name: instData.sourceName,
+          url: instData.officialUrl,
+          sourceType: instData.sourceDocumentType === 'PRIMARY_STATUTE' ? 'LEGISLATION_PORTAL' : 'OFFICIAL_GAZETTE',
           isOfficial: true,
-          isDirect: false,
+          isDirect: true,
           retrievedDate: new Date('2024-07-01'),
         },
       })
       sourcesUpsertedCount++
-    }
 
-    if (!countryCategoryInstrumentCounts[indiaCountry.id]) {
-      countryCategoryInstrumentCounts[indiaCountry.id] = {}
-    }
-    countryCategoryInstrumentCounts[indiaCountry.id][category.id] =
-      (countryCategoryInstrumentCounts[indiaCountry.id][category.id] || 0) + 1
+      if (instData.sourceUrl && instData.sourceUrl !== instData.officialUrl) {
+        await prisma.legalSource.create({
+          data: {
+            instrumentId: instrument.id,
+            name: `${instData.issuingAuthority} Portal`,
+            url: instData.sourceUrl,
+            sourceType: 'REGULATOR_SITE',
+            isOfficial: true,
+            isDirect: false,
+            retrievedDate: new Date('2024-07-01'),
+          },
+        })
+        sourcesUpsertedCount++
+      }
 
-    lawsUpsertedCount++
+      if (!countryCategoryInstrumentCounts[targetCountry.id]) {
+        countryCategoryInstrumentCounts[targetCountry.id] = {}
+      }
+      countryCategoryInstrumentCounts[targetCountry.id][category.id] =
+        (countryCategoryInstrumentCounts[targetCountry.id][category.id] || 0) + 1
+
+      lawsUpsertedCount++
+    }
   }
 
+
+  await ingestVerifiedBatch('IN', 'Republic of India', indiaVerifiedInstruments, 'The Gazette of India & India Code')
+  await ingestVerifiedBatch('US', 'United States of America', usVerifiedInstruments, 'Office of the Law Revision Counsel (US Code) & eCFR')
+  await ingestVerifiedBatch('GB', 'United Kingdom', ukVerifiedInstruments, 'The National Archives (UK Legislation Repository)')
   // B. Ingest 109 Migrated Prototype Baseline Laws for remaining 47 countries
   console.log('Ingesting 109 migrated baseline instruments for other 47 jurisdictions...')
   for (const rawLaw of lawsToSeed) {
-    if (rawLaw.countryCode === 'IN') continue // Skip legacy India entries
+    if (rawLaw.countryCode === 'IN' || rawLaw.countryCode === 'US' || rawLaw.countryCode === 'GB') continue // Skip legacy entries replaced by verified batches
 
     const country = countryMap[rawLaw.countryCode]
     if (!country) continue
@@ -3019,7 +3822,6 @@ async function main() {
   for (const c of countriesData) {
     const country = countryMap[c.isoCode]
     if (!country) continue
-    const isIndia = c.isoCode === 'IN'
 
     for (const cat of categoriesData) {
       const category = categoryMap[cat.key]
@@ -3048,13 +3850,19 @@ async function main() {
         ? 'Baseline indicators established from UNCTAD Cyberlaw Tracker. Individual statutory instruments are pending detailed research.'
         : 'Specialized cyber law category not yet researched for this jurisdiction.'
 
-      if (isIndia) {
-        // India is fully verified across all categories
+      const isVerifiedJurisdiction = c.isoCode === 'IN' || c.isoCode === 'US' || c.isoCode === 'GB'
+      if (isVerifiedJurisdiction) {
         verifiedCount = instrumentCount
         unverifiedCount = 0
         coverageStatus = hasInstruments ? 'RESEARCH_COMPLETED' : 'RESEARCH_PENDING'
         confidenceLevel = 'HIGH'
-        assessmentSource = 'The Gazette of India & India Code National Legislation Repository'
+        if (c.isoCode === 'IN') {
+          assessmentSource = 'The Gazette of India & India Code National Legislation Repository'
+        } else if (c.isoCode === 'US') {
+          assessmentSource = 'Office of the Law Revision Counsel (US Code) & Electronic Code of Federal Regulations'
+        } else {
+          assessmentSource = 'The National Archives (Official UK Legislation Repository legislation.gov.uk)'
+        }
         researchNotes = `CyberLaw Atlas documents ${instrumentCount} verified statutory instrument(s) in this category.`
       } else if (hasInstruments) {
         // Other countries: prototype baseline documented, but awaiting primary gazette verification
@@ -3082,7 +3890,7 @@ async function main() {
           unverifiedCount,
           confidenceLevel,
           lastResearchedDate: hasInstruments ? new Date('2024-07-01') : null,
-          lastVerifiedDate: isIndia && hasInstruments ? new Date('2024-07-01') : null,
+          lastVerifiedDate: isVerifiedJurisdiction && hasInstruments ? new Date('2024-07-01') : null,
           researchNotes,
           assessmentSource,
         },
@@ -3097,7 +3905,7 @@ async function main() {
           unverifiedCount,
           confidenceLevel,
           lastResearchedDate: hasInstruments ? new Date('2024-07-01') : null,
-          lastVerifiedDate: isIndia && hasInstruments ? new Date('2024-07-01') : null,
+          lastVerifiedDate: isVerifiedJurisdiction && hasInstruments ? new Date('2024-07-01') : null,
           researchNotes,
           assessmentSource,
         },

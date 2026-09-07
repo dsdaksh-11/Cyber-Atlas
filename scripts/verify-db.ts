@@ -32,7 +32,7 @@ async function verifyDatabase() {
     console.log(`Global Database Metrics:`)
     console.log(`  • Jurisdictions:            ${totalCountries}`)
     console.log(`  • Taxonomy Categories:       ${totalCategories}`)
-    console.log(`  • Verified Legal Instruments: ${totalInstruments}`)
+    console.log(`  • Documented Legal Instruments: ${totalInstruments}`)
     console.log(`  • Parsed Legal Provisions:   ${totalProvisions}`)
     console.log(`  • Official Source Citations: ${totalSources}`)
     console.log(`  • Category Coverage Matrix:  ${totalCoverages}`)

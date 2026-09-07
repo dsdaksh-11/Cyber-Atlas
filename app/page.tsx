@@ -43,6 +43,7 @@ export default async function HomePage() {
 
   let totalLawsCount = 0
   let totalInstrumentsCount = 0
+  let totalVerifiedCount = 0
   let totalCoverageCount = 0
   let newsCount = 0
 
@@ -60,6 +61,7 @@ export default async function HomePage() {
 
     totalLawsCount = await prisma.cyberLaw.count()
     totalInstrumentsCount = await prisma.legalInstrument.count()
+    totalVerifiedCount = await prisma.legalInstrument.count({ where: { verificationStatus: 'VERIFIED' } })
     totalCoverageCount = await prisma.countryCoverage.count()
     newsCount = await prisma.newsArticle.count({ where: { isRelevant: true } })
   } catch (error) {
@@ -140,6 +142,7 @@ export default async function HomePage() {
           countryCount={countries.length}
           lawCount={totalLawsCount}
           instrumentCount={totalInstrumentsCount}
+          verifiedCount={totalVerifiedCount}
           coverageCount={totalCoverageCount}
         />
 

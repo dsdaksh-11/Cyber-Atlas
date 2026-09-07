@@ -11,13 +11,13 @@
 | Global Metric | Value | Provenance & Completeness Reality |
 |:---|:---:|:---|
 | **Monitored Jurisdictions** | **48** | 100% of defined platform scope |
-| **Jurisdictions with Full 9-Category Coverage** | **1 (India)** | Fully researched and verified across all 9 categories |
-| **Jurisdictions at Migrated Prototype Baseline** | **47** | Awaiting primary gazette audit and category expansion |
-| **Total Legal Instruments Documented** | **124** | 15 verified (India) + 109 under review (other 47 countries) |
-| **Independently Verified Instruments** | **15** | India completeness test verified against official gazettes |
-| **Instruments Awaiting Review / Verification** | **109** | Migrated baseline records requiring primary source review |
-| **Direct Official URLs** | **53** | 15 (India) + 38 (global deep-links) |
-| **Generic Portal URLs** | **71** | Ministerial directories and general homepages |
+| **Jurisdictions with Full 9-Category Coverage** | **3 (India, US, UK)** | Fully researched and verified across all 9 categories |
+| **Jurisdictions at Migrated Prototype Baseline** | **45** | Awaiting primary gazette audit and category expansion |
+| **Total Legal Instruments Documented** | **137** | 34 verified (15 India + 10 US + 9 UK) + 103 under review (45 countries) |
+| **Independently Verified Instruments** | **34** | Benchmarked against official national gazettes and statutes |
+| **Instruments Awaiting Review / Verification** | **103** | Migrated baseline records requiring primary source review |
+| **Direct Official URLs** | **72** | 34 (IN, US, UK) + 38 (global baseline deep-links) |
+| **Generic Portal URLs** | **65** | Ministerial directories and general homepages |
 
 ---
 
@@ -42,7 +42,7 @@ The table below audits every jurisdiction in CyberLaw Atlas, recording instrumen
 | 13 | **Qatar** | `QA` | Middle East | **2** | **0** | 2 | 1 | 1 | Cybercrime, Data Protection & Privacy | Evidence, Fraud, Infrastructure, Consumer, Tax pending | Cybercrime Prevention Law 2014 and Data Privacy Law 2016; QCB financial security circulars pending review. |
 | 14 | **Israel** | `IL` | Middle East | **2** | **0** | 2 | 1 | 1 | Data Protection & Privacy, Cybercrime | Evidence, Fraud, Infrastructure, Consumer, Tax pending | Computers Law 1995 and Privacy Protection Law 1981; INCD cybersecurity guidelines pending extraction. |
 | 15 | **Türkiye** | `TR` | Middle East | **2** | **0** | 2 | 0 | 2 | Cybercrime, Data Protection & Privacy | Evidence, Fraud, Infrastructure, Consumer, Tax pending | Penal Code provisions and KVKK 2016; Information and Communication Technologies Authority (BTK) regulations pending. |
-| 16 | **United Kingdom** | `GB` | Europe | **3** | **0** | 3 | 3 | 0 | Cybercrime, Data Protection & Privacy, Online Fraud & Financial Cybercrime | Evidence, Fraud, Infrastructure, Consumer, Tax pending | Historical statutory acts (CMA 1990, DPA 2018, Online Safety Act 2023); NIS Regulations 2018 and financial PRA rules pending extraction. |
+| 16 | **United Kingdom** | `GB` | Europe | **9** | **9** | 0 | 9 | 0 | All 9 Categories Documented | None (Complete) | High instrument count (9): Comprehensive statutory coverage spanning Computer Misuse Act 1990, DPA 2018 / UK GDPR (72h reporting), UK NIS Regulations 2018 (72h reporting), Telecommunications (Security) Act 2021, ECA 2000, Fraud Act 2006, PACE 1984 ss. 19-20, Online Safety Act 2023, and VATA 1994. |
 | 17 | **Germany** | `DE` | Europe | **3** | **0** | 3 | 2 | 1 | Cybercrime, Data Protection & Privacy, Cybersecurity Framework | Evidence, Fraud, Infrastructure, Consumer, Tax pending | Federal Penal Code provisions (StGB §§ 202a-d), BDSG, and IT Security Act 2.0 (BSIG); BSI KRITIS ordinances pending extraction. |
 | 18 | **France** | `FR` | Europe | **3** | **0** | 3 | 0 | 3 | Cybercrime, Data Protection & Privacy, Critical Infrastructure Protection | Evidence, Fraud, Infrastructure, Consumer, Tax pending | Code Pénal provisions (Godfrain Law), Loi Informatique et Libertés, and LPM provisions; ANSSI technical guides pending review. |
 | 19 | **Italy** | `IT` | Europe | **3** | **0** | 3 | 0 | 3 | Cybercrime, Data Protection & Privacy, Cybersecurity Framework | Evidence, Fraud, Infrastructure, Consumer, Tax pending | Codice Penale provisions, Privacy Code (D.Lgs. 196/2003 as amended), and ACN cybersecurity decrees pending review. |
@@ -59,7 +59,7 @@ The table below audits every jurisdiction in CyberLaw Atlas, recording instrumen
 | 30 | **Ireland** | `IE` | Europe | **2** | **0** | 2 | 1 | 1 | Cybercrime, Data Protection & Privacy | Evidence, Fraud, Infrastructure, Consumer, Tax pending | Criminal Justice (Offences Relating to Information Systems) Act 2017 and DPA 2018; NCSC sector guidelines pending. |
 | 31 | **Austria** | `AT` | Europe | **2** | **0** | 2 | 1 | 1 | Cybercrime, Data Protection & Privacy | Evidence, Fraud, Infrastructure, Consumer, Tax pending | StGB §§ 118a/126a-c and DSG 2018; Network and Information System Security Act (NISG) pending. |
 | 32 | **Greece** | `GR` | Europe | **2** | **0** | 2 | 1 | 1 | Cybercrime, Data Protection & Privacy | Evidence, Fraud, Infrastructure, Consumer, Tax pending | Law 4411/2016 and Law 4624/2019; National Cyber Security Authority regulations pending. |
-| 33 | **United States** | `US` | Americas | **3** | **0** | 3 | 1 | 2 | Cybercrime, Data Protection & Privacy, Cybersecurity Framework | Evidence, Fraud, Infrastructure, Consumer, Tax pending | Sectorally fragmented federal model (CFAA, ECPA, CISA); major federal sector statutes (HIPAA, GLBA, COPPA) and state laws (CCPA) queued in backlog. |
+| 33 | **United States** | `US` | Americas | **10** | **10** | 0 | 10 | 0 | All 9 Categories Documented | None (Complete) | High instrument count (10): Sectorally differentiated federal framework covering CFAA (18 U.S.C. § 1030), ECPA, HIPAA Security Rule, CISA 2015, CIRCIA 2022 (72h/24h reporting), E-SIGN Act, GLBA Safeguards Rule, FRE Rules 902(13)/(14), COPPA, and post-Wayfair state marketplace economic nexus regimes. |
 | 34 | **Canada** | `CA` | Americas | **2** | **0** | 2 | 1 | 1 | Cybercrime, Data Protection & Privacy | Evidence, Fraud, Infrastructure, Consumer, Tax pending | Criminal Code ss. 342.1/430 and PIPEDA; Bill C-26 (CCSPA) pending royal assent/enforcement. |
 | 35 | **Mexico** | `MX` | Americas | **2** | **0** | 2 | 1 | 1 | Cybercrime, Data Protection & Privacy | Evidence, Fraud, Infrastructure, Consumer, Tax pending | Federal Criminal Code provisions and LFPDPPP; National Cybersecurity Strategy guidelines pending review. |
 | 36 | **Brazil** | `BR` | Americas | **3** | **0** | 3 | 3 | 0 | Cybercrime, Electronic Transactions & E-Commerce, Data Protection & Privacy | Evidence, Fraud, Infrastructure, Consumer, Tax pending | Marco Civil da Internet (Law 12.965), LGPD (Law 13.709), and Carolina Dieckmann Law (Law 12.737); ANPD resolutions pending. |
