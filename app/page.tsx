@@ -31,24 +31,26 @@ export async function generateMetadata() {
 }
 
 export default async function HomePage() {
-  // Fetch countries and law count from database
+  // Fetch countries and counts from database
   let countries: Array<{
     id: string
     name: string
     isoCode: string
     region: string
     flagEmoji: string
-    _count: { laws: number }
+    _count: { laws: number; instruments: number }
   }> = []
 
   let totalLawsCount = 0
+  let totalInstrumentsCount = 0
+  let totalCoverageCount = 0
   let newsCount = 0
 
   try {
     countries = await prisma.country.findMany({
       include: {
         _count: {
-          select: { laws: true },
+          select: { laws: true, instruments: true },
         },
       },
       orderBy: {
@@ -57,6 +59,8 @@ export default async function HomePage() {
     })
 
     totalLawsCount = await prisma.cyberLaw.count()
+    totalInstrumentsCount = await prisma.legalInstrument.count()
+    totalCoverageCount = await prisma.countryCoverage.count()
     newsCount = await prisma.newsArticle.count({ where: { isRelevant: true } })
   } catch (error) {
     console.error('Error loading homepage data:', error)
@@ -132,7 +136,12 @@ export default async function HomePage() {
       {/* Main Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Global Statistics Bar */}
-        <StatsOverview countryCount={countries.length} lawCount={totalLawsCount} />
+        <StatsOverview
+          countryCount={countries.length}
+          lawCount={totalLawsCount}
+          instrumentCount={totalInstrumentsCount}
+          coverageCount={totalCoverageCount}
+        />
 
         {/* Featured Jurisdictions Grid */}
         <section id="jurisdictions" className="space-y-6">
@@ -175,8 +184,9 @@ export default async function HomePage() {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs">
-                  <span className="text-slate-300 font-medium">
-                    {c._count.laws} Indexed Laws
+                  <span className="text-emerald-300 font-medium flex items-center gap-1">
+                    <CheckCircle2 className="h-3 w-3 text-emerald-400" />
+                    {c._count.instruments || c._count.laws} Instruments
                   </span>
                   <span className="flex items-center gap-1 font-semibold text-cyan-400 group-hover:translate-x-1 transition-transform">
                     View Laws <ArrowRight className="h-3.5 w-3.5" />

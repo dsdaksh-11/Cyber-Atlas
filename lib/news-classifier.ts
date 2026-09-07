@@ -32,7 +32,14 @@ const CYBER_KEYWORDS = [
   'privilege escalation', 'denial of service', 'unauthorized access'
 ]
 
-const COMBO_PHRASES = [
+interface ComboPhrase {
+  phrase: string
+  score: number
+  category: string
+  threat: 'Low' | 'Medium' | 'High' | 'Critical'
+}
+
+const COMBO_PHRASES: ComboPhrase[] = [
   { phrase: 'prompt injection', score: 40, category: 'Prompt Injection', threat: 'High' },
   { phrase: 'ai agent security', score: 40, category: 'AI Agent Security', threat: 'Medium' },
   { phrase: 'agent security', score: 35, category: 'AI Agent Security', threat: 'Medium' },
@@ -98,7 +105,7 @@ export function classifyArticle(title: string, description: string): Classificat
     if (text.includes(combo.phrase)) {
       score += combo.score
       if (!matchedComboCategory) matchedComboCategory = combo.category
-      if (!matchedComboThreat) matchedComboThreat = combo.threat as any
+      if (!matchedComboThreat) matchedComboThreat = combo.threat
     }
   }
 

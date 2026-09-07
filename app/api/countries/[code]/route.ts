@@ -16,6 +16,39 @@ export async function GET(
 
     const normalizedCode = normalizeCountryCode(code)
 
+    const countryInclude = {
+      coverages: {
+        include: {
+          category: true,
+        },
+        orderBy: {
+          category: {
+            displayOrder: 'asc' as const,
+          },
+        },
+      },
+      instruments: {
+        include: {
+          category: true,
+          provisions: {
+            orderBy: {
+              displayOrder: 'asc' as const,
+            },
+          },
+          sources: true,
+          childInstruments: true,
+        },
+        orderBy: {
+          yearEnacted: 'desc' as const,
+        },
+      },
+      laws: {
+        orderBy: {
+          year: 'desc' as const,
+        },
+      },
+    }
+
     // Try finding by ISO code first
     let country = await prisma.country.findFirst({
       where: {
@@ -23,13 +56,7 @@ export async function GET(
           equals: normalizedCode,
         },
       },
-      include: {
-        laws: {
-          orderBy: {
-            year: 'desc',
-          },
-        },
-      },
+      include: countryInclude,
     })
 
     // Fallback: match by country name case-insensitive
@@ -40,13 +67,7 @@ export async function GET(
             equals: code.replace(/-/g, ' '),
           },
         },
-        include: {
-          laws: {
-            orderBy: {
-              year: 'desc',
-            },
-          },
-        },
+        include: countryInclude,
       })
     }
 
@@ -66,7 +87,7 @@ export async function GET(
     console.error('Error fetching country:', error)
     return NextResponse.json(
       { error: 'Server error retrieving country cyber law information' },
-      { status: 500 }
+      { status: 700 }
     )
   }
 }

@@ -8,7 +8,11 @@ export async function GET() {
     const countries = await prisma.country.findMany({
       include: {
         _count: {
-          select: { laws: true },
+          select: {
+            laws: true,
+            instruments: true,
+            coverages: true,
+          },
         },
       },
       orderBy: {

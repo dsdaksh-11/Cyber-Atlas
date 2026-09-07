@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { Shield, Globe, Database, Scale, Search, Brain } from 'lucide-react'
+import { Shield, Globe, Scale, Search, Brain } from 'lucide-react'
 
 export function Header() {
   return (

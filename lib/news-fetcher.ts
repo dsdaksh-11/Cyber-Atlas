@@ -140,8 +140,9 @@ export async function fetchNewsFromFeed(source: NewsFeedSource): Promise<Fetched
         classification,
       })
     }
-  } catch (err: any) {
-    console.error(`[NewsFetcher] Error fetching ${source.name}:`, err.message)
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err)
+    console.error(`[NewsFetcher] Error fetching ${source.name}:`, msg)
   }
 
   return articles

@@ -10,13 +10,15 @@
 [![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748?style=flat&logo=prisma)](https://www.prisma.io/)
 [![Database](https://img.shields.io/badge/Database-SQLite-003B57?style=flat&logo=sqlite)](https://www.sqlite.org/)
 [![Jurisdictions](https://img.shields.io/badge/Jurisdictions-48%20Countries-emerald)](#-supported-jurisdictions)
-[![Statutory Laws](https://img.shields.io/badge/Statutory%20Laws-112%2B%20Enacted-cyan)](#-database-schema--legal-data-architecture)
+[![Legal Instruments](https://img.shields.io/badge/Legal%20Instruments-112%2B%20Verified-cyan)](#-database-schema--legal-data-architecture)
+[![Coverage Model](https://img.shields.io/badge/Coverage%20Model-UNCTAD%20Baseline%20Aligned-violet)](#-database-schema--legal-data-architecture)
 
 ---
 
 ## 📑 Table of Contents
 
 - [Overview](#-overview)
+- [Legal Data Methodology](#-legal-data-methodology--standards)
 - [Key Features](#-key-features)
 - [System Architecture](#-system-architecture)
 - [Supported Jurisdictions](#-supported-jurisdictions)
@@ -24,66 +26,37 @@
 - [Database Schema & Data Pipeline](#-database-schema--data-pipeline)
 - [API Reference](#-api-reference)
 - [Getting Started](#-getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation & Environment](#installation--environment)
-  - [Database Setup & Seeding](#database-setup--seeding)
-  - [Running the Application](#running-the-application)
-- [NPM Scripts](#-npm-scripts)
 - [License & Legal Disclaimer](#-license--legal-disclaimer)
 
 ---
 
 ## 🧭 Overview
 
-**CyberLaw Atlas** provides structured, verified, and source-attributed legal intelligence at the intersection of international cybersecurity law, data protection governance, and emergent artificial intelligence risks. 
+**CyberLaw Atlas** provides structured, verified, and source-attributed legal intelligence at the intersection of international cybersecurity law, data protection governance, and emergent artificial intelligence risks.
 
 Designed for legal researchers, cybersecurity officers (CISOs), compliance teams, and policy analysts, the platform consolidates dispersed national statutes, official gazettes, and UNCTAD Cyberlaw Tracker taxonomies into a single, high-performance interface.
 
-### Core Objectives
-
-1. **Harmonized Legal Intelligence**: Standardize diverse national legal provisions into structured, searchable records with direct links to official gazettes and governing bodies.
-2. **Instant Cross-Border Comparison**: Enable multi-nation side-by-side comparative matrices to evaluate regulatory differences in penalties, notification windows, and liability.
-3. **Automated Threat-to-Law Context**: Monitor active threat advisories and AI security vulnerabilities mapped against legal and compliance frameworks without recurring API costs.
-
 ---
 
-## ✨ Key Features
+## ⚖️ Legal Data Methodology & Standards
 
-### 1. Global Jurisdiction Explorer (`/`)
-- **Fast Interactive Search**: Search jurisdictions instantly by Country Name, ISO 3166-1 alpha-2 standard code (e.g. `IN`, `US`, `CN`, `GB`, `DE`, `JP`), or geographical region.
-- **Quick-Access Hubs**: Instant filter pills for G7, APAC, EU, and emerging cybersecurity powerhouses.
-- **High-Level Statistics**: Real-time counters showing total indexed jurisdictions, statutory cyber acts, and active threat advisories.
+CyberLaw Atlas operates on an empirical, research-backed methodology designed to avoid superficial "laws-per-country" quotas:
 
-### 2. Comprehensive Jurisdiction Profiles (`/country/[code]`)
-- **Statutory Details**: Deep dive into primary cybercrime acts, data protection regulations (e.g., GDPR, DPDP, LGPD, PIPL), and critical infrastructure security policies.
-- **Structured Provisions**: Section-by-section breakdown of penalties, unauthorized access definitions, surveillance warrants, and breach disclosure timelines.
-- **Institutional Oversight**: Direct attribution to enforcing bodies (e.g., CERT-In, CISA, CAC, BSI, NCSC, ANPD).
-- **Official Provenance**: Verified citations linked to national legislation repositories and official gazettes.
-- **In-Page Law Filtering**: Dynamic filtering by legal categories (Cybercrime, Data Privacy, Electronic Commerce, Critical Infrastructure, etc.) and keyword search.
-
-### 3. Cross-Jurisdictional Comparative Matrix (`/compare`)
-- **Side-by-Side Analysis**: Select and contrast cyber legislation across 2 or more nations simultaneously.
-- **Domain Matrix Mapping**: Compare specific regulatory dimensions:
-  - Primary cybercrime statutes & penalties
-  - Data protection & privacy authorities
-  - Critical Information Infrastructure (CII) directives
-  - Mandatory incident reporting thresholds
-- **Shareable Matrix State**: Full URL synchronization (e.g., `/compare?countries=IN,US,GB,DE`) for seamless collaboration.
-
-### 4. AI Cybersecurity Threat Intelligence (`/ai-security-news`)
-- **Emerging Threat Feeds**: Real-time RSS monitoring covering AI Agent security, LLM prompt injection, jailbreaks, deepfake fraud, and automated malware.
-- **Zero-Cost Deterministic NLP**: Fast, rule-based categorization engine computing threat severity levels (`Low`, `Medium`, `High`, `Critical`) and relevance scores without expensive external AI API calls.
-- **Authoritative Sources**: Syndicated from CISA Advisories, The Hacker News, BleepingComputer, SecurityWeek, and Krebs on Security.
-- **Instant Feed Refresh**: On-demand sync button with immediate background categorization and database upserts.
-
-### 5. Standardized Data Ingestion Pipeline (`lib/ingestion`)
-- Schema-enforced ingestion module aligned with UNCTAD taxonomy standards for programmatic addition of new sovereign statutes.
+1. **No Artificial Targets**: A jurisdiction may have multiple statutes, criminal code provisions, sector-specific directives, and regulator circulars. The platform never treats 2–3 laws as "complete coverage".
+2. **Transparent Coverage Modeling**: Missing records signify *"Not yet documented in CyberLaw Atlas"*, **never** *"No legislation exists"*.
+3. **Dual-Layer Classification**:
+   - **UNCTAD Baseline Indicators**: Benchmark tracking across the 5 core UNCTAD cyberlaw areas (E-Transactions, Data Protection, Cybercrime, Consumer Protection, Indirect Taxation).
+   - **In-Depth Documented Legal Instruments**: Section-level legal instruments verified against official government gazettes.
+4. **Methodology Documentation**:
+   - [**Legal Data Audit Report** (`docs/legal-data-audit.md`)](./docs/legal-data-audit.md): Forensic audit of all 48 jurisdictions, category distributions, and identified gaps.
+   - [**14-Step Research Workflow** (`docs/legal-data-research-workflow.md`)](./docs/legal-data-research-workflow.md): Standardized protocol and minimum evidence criteria for `VERIFIED` status.
+   - [**Legal Research Backlog** (`docs/legal-data-backlog.md`)](./docs/legal-data-backlog.md): Systematic country-by-country backlog tracking unresearched sectors and secondary regulations.
 
 ---
 
 ## 🏛 Supported Jurisdictions
 
-CyberLaw Atlas indexes **48 sovereign jurisdictions** spanning all 6 major continents with 100% legal coverage:
+CyberLaw Atlas monitors **48 sovereign jurisdictions** spanning all 6 major continents with UNCTAD baseline alignment and transparent coverage tracking:
 
 | Region | Count | Jurisdictions (ISO Alpha-2) |
 |:---|:---:|:---|
@@ -100,116 +73,77 @@ CyberLaw Atlas indexes **48 sovereign jurisdictions** spanning all 6 major conti
 
 ```
 cyberlaw-atlas-workspace/
-├── package.json                   # Workspace root (proxy scripts for dev & db)
-└── ucp-adityass/                  # Main Next.js 16 Application
-    ├── app/                       # Next.js App Router
-    │   ├── page.tsx               # Global Atlas homepage & jurisdiction search
-    │   ├── layout.tsx             # Root layout, theme provider & global navbar
-    │   ├── country/[code]/        # Dynamic country legal profile & statute viewer
-    │   ├── compare/               # Side-by-side multi-jurisdiction comparative engine
-    │   ├── ai-security-news/      # Real-time AI threat intelligence feed
-    │   └── api/                   # RESTful API endpoints
-    │       ├── countries/         # Country listing and single-country endpoints
-    │       ├── compare/           # Cross-border comparison API
-    │       └── news/              # News querying and live RSS sync endpoints
-    ├── components/                # Reusable UI component library
-    │   ├── CountrySearch.tsx      # Fast debounce-assisted search & filter component
-    │   ├── Header.tsx             # Responsive global navigation
-    │   ├── Footer.tsx             # Footer & attribution details
-    │   ├── LawCard.tsx            # Expandable statute card with official links
-    │   ├── LawFilters.tsx         # Category and enactment timeline filters
-    │   ├── StatsOverview.tsx      # Platform metrics banner
-    │   └── IngestionBanner.tsx    # Data compliance & provenance banner
-    ├── lib/                       # Core domain logic & utilities
-    │   ├── prisma.ts              # Singleton Prisma client instance
-    │   ├── country-utils.ts       # ISO code normalization & validation
-    │   ├── news-classifier.ts     # Deterministic NLP classification & threat scoring
-    │   ├── news-fetcher.ts        # RSS feed parser & multi-source aggregator
-    │   └── ingestion/             # UNCTAD-compliant legal record ingestion engine
-    ├── prisma/                    # Database models and seed scripts
-    │   ├── schema.prisma          # Database schema (Country, CyberLaw, NewsArticle)
-    │   └── seed.ts                # Full seed dataset (48 countries, 112+ laws, news)
-    ├── scripts/                   # CLI verification and diagnostic tools
-    │   ├── check-db.ts            # Rapid database count diagnostics
-    │   └── verify-db.ts           # Automated 100% legal coverage verification
-    └── types/                     # TypeScript definitions for legal data
+├── docs/                          # Comprehensive legal methodology documentation
+│   ├── legal-data-audit.md        # Database forensic audit report
+│   ├── legal-data-research-workflow.md # 14-step verified research protocol
+│   └── legal-data-backlog.md      # Systematic research backlog across 48 nations
+├── app/                           # Next.js App Router
+│   ├── page.tsx                   # Atlas homepage, global search & coverage metrics
+│   ├── country/[code]/            # Country profile with UNCTAD baseline & statutes
+│   ├── compare/                   # Side-by-side comparative legal matrix
+│   ├── ai-security-news/          # AI threat intelligence feed
+│   └── api/                       # RESTful endpoints (/api/countries, /api/compare, /api/news)
+├── components/                    # UI component library (LawCard, LawFilters, CountrySearch)
+├── lib/                           # Core utilities & ingestion pipeline
+├── prisma/                        # Database models and seed scripts
+│   ├── schema.prisma              # Hierarchical schema (Country, Coverage, Instrument, Provision)
+│   └── seed.ts                    # Idempotent 48-country seed script
+└── scripts/                       # Verification and data quality tools
+    ├── validate-legal-data.ts     # Data quality validation linter
+    ├── verify-db.ts               # Database verification & audit reporter
+    └── audit-db.ts                # Diagnostic audit script
 ```
-
----
-
-## 🤖 AI Cybersecurity Threat Intelligence
-
-The platform features an automated pipeline monitoring threats at the intersection of AI and InfoSec:
-
-1. **RSS Feed Aggregation (`lib/news-fetcher.ts`)**:
-   - Continuously monitors authoritative feeds: **CISA Advisories**, **The Hacker News**, **BleepingComputer**, **SecurityWeek**, and **Krebs on Security**.
-2. **Deterministic NLP Classifier (`lib/news-classifier.ts`)**:
-   - Evaluates articles against curated dual taxonomies for AI (LLMs, prompt injection, jailbreaks, deepfakes, autonomous agents) and cybersecurity (exploits, zero-days, backdoors, exfiltration).
-   - Computes a mathematical **Relevance Score (0–100)** based on term frequency and high-signal compound phrases.
-   - Assigns threat levels: `Critical` 🚨, `High` ⚠️, `Medium` 🟡, and `Low` ℹ️.
-3. **On-Demand Synchronization (`POST /api/news/refresh`)**:
-   - Triggers live feed retrieval, deduplication by article URL, classification, and database upserting directly from the web interface.
 
 ---
 
 ## 🗄 Database Schema & Legal Data Architecture
 
-The application uses **Prisma ORM** with SQLite for local development (and zero-config migration to PostgreSQL/MySQL in production).
+CyberLaw Atlas organizes legal intelligence into a clean, hierarchical relational structure:
 
-### Schema Models (`prisma/schema.prisma`)
+$$\text{Country} \longrightarrow \text{CountryCoverage} \longrightarrow \text{LegalCategory} \longrightarrow \text{LegalInstrument} \longrightarrow \text{LegalProvision} \ \& \ \text{LegalSource}$$
 
 ```mermaid
 erDiagram
-    Country ||--o{ CyberLaw : "enacts"
-    Country {
-        string id PK
-        string name UK
-        string isoCode UK
-        string region
-        string flagEmoji
-        datetime createdAt
-        datetime updatedAt
+    Country ||--o{ CountryCoverage : "tracks"
+    Country ||--o{ LegalInstrument : "enacts"
+    LegalCategory ||--o{ CountryCoverage : "categorizes"
+    LegalCategory ||--o{ LegalInstrument : "classifies"
+    LegalInstrument ||--o{ LegalProvision : "contains"
+    LegalInstrument ||--o{ LegalSource : "cites"
+    LegalInstrument ||--o{ LegalInstrument : "subordinate to"
+    Country ||--o{ CyberLaw : "legacy"
+
+    CountryCoverage {
+        string coverageStatus
+        boolean unctadBaselineCovered
+        string unctadBaselineStatus
+        int verifiedCount
+        string confidenceLevel
     }
-    CyberLaw {
-        string id PK
+    LegalInstrument {
         string title
-        int year
-        string category
+        string officialTitle
+        string instrumentType
+        int yearEnacted
         string summary
-        string keyProvisions
-        string authority
+        string issuingAuthority
+        string verificationStatus
         string officialUrl
-        string sourceName
-        string sourceUrl
-        string lastUpdated
-        string availabilityStatus
-        boolean isSampleData
-        string countryId FK
     }
-    NewsArticle {
-        string id PK
-        string title
-        string description
-        string sourceName
-        string sourceUrl
-        string articleUrl UK
-        string imageUrl
-        datetime publishedAt
-        string category
-        string threatLevel
-        float relevanceScore
-        boolean isRelevant
+    LegalProvision {
+        string articleNumber
+        string heading
+        string content
+        string penaltyDetails
+        string reportingMandate
+    }
+    LegalSource {
+        string name
+        string url
+        string sourceType
+        boolean isOfficial
     }
 ```
-
-### Statutory Categories Included
-- `Cybercrime` (unauthorized access, malware distribution, system interference)
-- `Data Protection` & `Privacy` (GDPR compliance, consent frameworks, cross-border transfers)
-- `Cybersecurity` (national incident response, CERT mandates, minimum security standards)
-- `Electronic Transactions` (digital signatures, e-commerce legal validity)
-- `Digital Evidence` (admissibility, chain of custody for digital forensics)
-- `Online Fraud` & `Financial Crime` (phishing, identity theft, illicit transactions)
-- `Critical Infrastructure` (SCADA/ICS protection, essential services resilience)
 
 ---
 

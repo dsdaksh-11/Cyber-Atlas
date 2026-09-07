@@ -3,54 +3,68 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function verifyDatabase() {
-  console.log('====================================================')
-  console.log('            CYBERLAW ATLAS - DATABASE VERIFICATION  ')
-  console.log('====================================================\n')
+  console.log('====================================================================')
+  console.log('            CYBERLAW ATLAS - DATABASE VERIFICATION & AUDIT          ')
+  console.log('====================================================================\n')
 
   try {
     const totalCountries = await prisma.country.count()
-    const totalCyberLaws = await prisma.cyberLaw.count()
+    const totalCategories = await prisma.legalCategory.count()
+    const totalInstruments = await prisma.legalInstrument.count()
+    const totalProvisions = await prisma.legalProvision.count()
+    const totalSources = await prisma.legalSource.count()
+    const totalCoverages = await prisma.countryCoverage.count()
     const totalNewsArticles = await prisma.newsArticle.count()
 
     const countries = await prisma.country.findMany({
       include: {
-        laws: {
-          orderBy: { year: 'desc' },
+        instruments: {
+          include: { category: true },
+          orderBy: { yearEnacted: 'desc' },
+        },
+        coverages: {
+          include: { category: true },
         },
       },
       orderBy: { name: 'asc' },
     })
 
-    const countriesWithLaws = countries.filter((c) => c.laws.length > 0)
-    const countriesWithoutLaws = countries.filter((c) => c.laws.length === 0)
+    console.log(`Global Database Metrics:`)
+    console.log(`  • Jurisdictions:            ${totalCountries}`)
+    console.log(`  • Taxonomy Categories:       ${totalCategories}`)
+    console.log(`  • Verified Legal Instruments: ${totalInstruments}`)
+    console.log(`  • Parsed Legal Provisions:   ${totalProvisions}`)
+    console.log(`  • Official Source Citations: ${totalSources}`)
+    console.log(`  • Category Coverage Matrix:  ${totalCoverages}`)
+    console.log(`  • Threat Intelligence Feeds: ${totalNewsArticles}\n`)
 
-    console.log(`Total Countries:    ${totalCountries}`)
-    console.log(`Total Cyber Laws:   ${totalCyberLaws}`)
-    console.log(`Total News Alerts:  ${totalNewsArticles}`)
-    console.log(`\nCountries with laws:    ${countriesWithLaws.length}`)
-    console.log(`Countries without laws: ${countriesWithoutLaws.length}\n`)
+    console.log('--------------------------------------------------------------------')
+    console.log('           JURISDICTION BREAKDOWN & INSTRUMENT TYPOLOGY             ')
+    console.log('--------------------------------------------------------------------')
 
-    console.log('----------------------------------------------------')
-    console.log('           JURISDICTION BREAKDOWN & STATUTES        ')
-    console.log('----------------------------------------------------')
+    let partiallyResearchedCount = 0
+    let fullyResearchedCategories = 0
 
     for (const country of countries) {
-      const statusIcon = country.laws.length > 0 ? '✓' : '✗'
+      const verifiedInstruments = country.instruments.filter((i) => i.verificationStatus === 'VERIFIED')
+      const researchedCats = country.coverages.filter((c) => c.coverageStatus !== 'NOT_RESEARCHED')
+      if (verifiedInstruments.length > 0) partiallyResearchedCount++
+      fullyResearchedCategories += researchedCats.length
+
       console.log(
-        `${statusIcon} ${country.flagEmoji} ${country.name} (${country.isoCode}) [${country.region}]: ${country.laws.length} laws`
+        `🏛  ${country.flagEmoji} ${country.name} (${country.isoCode}) [${country.region}]: ${verifiedInstruments.length} instruments indexed (${researchedCats.length}/${country.coverages.length} categories evaluated)`
       )
-      for (const law of country.laws) {
-        console.log(`    • [${law.year}] [${law.category}] ${law.title}`)
+      for (const inst of country.instruments) {
+        console.log(`    • [${inst.yearEnacted || 'N/A'}] [${inst.instrumentType}] [${inst.category.name}] ${inst.title}`)
       }
     }
 
-    console.log('\n====================================================')
-    if (countriesWithoutLaws.length === 0 && totalCountries >= 48 && totalCyberLaws > 0) {
-      console.log('✅ ALL 48 JURISDICTIONS HAVE PERSISTED CYBER LAWS!')
-    } else if (countriesWithoutLaws.length > 0) {
-      console.log(`⚠️  ${countriesWithoutLaws.length} countries currently have no cyber laws in the database.`)
-    }
-    console.log('====================================================\n')
+    console.log('\n====================================================================')
+    console.log(`STATUS SUMMARY:`)
+    console.log(`  • ${partiallyResearchedCount}/${totalCountries} jurisdictions have verified statutory instruments documented.`)
+    console.log(`  • ${fullyResearchedCategories}/${totalCoverages} category-country areas evaluated against UNCTAD baseline & national portals.`)
+    console.log(`  • Research backlog and pending categories are actively tracked in docs/legal-data-backlog.md.`)
+    console.log('====================================================================\n')
   } catch (error) {
     console.error('❌ Database verification encountered an error:', error)
     process.exit(1)

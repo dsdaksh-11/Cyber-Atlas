@@ -5,12 +5,10 @@ import Link from 'next/link'
 import {
   Brain,
   ShieldAlert,
-  Shield,
   RefreshCw,
   ExternalLink,
   Info,
   Calendar,
-  User,
   Filter,
   Search,
   CheckCircle2,
@@ -67,7 +65,7 @@ export function NewsView() {
   const [searchQuery, setSearchQuery] = useState<string>('')
 
   // Fetch articles from API
-  const fetchArticles = async () => {
+  const fetchArticles = React.useCallback(async () => {
     setLoading(true)
     setError(null)
 
@@ -85,15 +83,47 @@ export function NewsView() {
       }
 
       setArticles(data.articles || [])
-    } catch (err: any) {
-      setError(err.message || 'An error occurred while fetching news articles.')
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'An error occurred while fetching news articles.')
     } finally {
       setLoading(false)
     }
-  }
+  }, [selectedCategory, selectedThreatLevel, searchQuery])
 
   useEffect(() => {
-    fetchArticles()
+    let isCancelled = false
+
+    const execute = async () => {
+      try {
+        const params = new URLSearchParams()
+        if (selectedCategory !== 'All Categories') params.append('category', selectedCategory)
+        if (selectedThreatLevel !== 'All') params.append('threatLevel', selectedThreatLevel)
+        if (searchQuery.trim()) params.append('search', searchQuery.trim())
+
+        const res = await fetch(`/api/news?${params.toString()}`)
+        const data = await res.json()
+
+        if (!isCancelled) {
+          if (!res.ok) {
+            setError(data.error || 'Failed to load AI security news')
+          } else {
+            setArticles(data.articles || [])
+          }
+          setLoading(false)
+        }
+      } catch (err: unknown) {
+        if (!isCancelled) {
+          setError(err instanceof Error ? err.message : 'An error occurred while fetching news articles.')
+          setLoading(false)
+        }
+      }
+    }
+
+    execute()
+
+    return () => {
+      isCancelled = true
+    }
   }, [selectedCategory, selectedThreatLevel, searchQuery])
 
   // Trigger manual news refresh
@@ -117,7 +147,7 @@ export function NewsView() {
       } else {
         setRefreshMessage(data.error || 'Feed refresh complete.')
       }
-    } catch (err: any) {
+    } catch {
       setRefreshMessage('Could not connect to news feed sources.')
     } finally {
       setRefreshing(false)
@@ -308,6 +338,7 @@ export function NewsView() {
               {/* Optional Thumbnail */}
               {article.imageUrl && (
                 <div className="relative h-44 w-full overflow-hidden rounded-2xl border border-slate-800/80">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={article.imageUrl}
                     alt={article.title}

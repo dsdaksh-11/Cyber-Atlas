@@ -12,33 +12,178 @@ datasource db {
 }
 
 model Country {
-  id        String     @id @default(cuid())
-  name      String     @unique
-  isoCode   String     @unique // ISO 3166-1 alpha-2 standard (e.g. IN, CN, US, GB)
-  region    String
-  flagEmoji String
-  laws      CyberLaw[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id          String            @id @default(cuid())
+  name        String            @unique
+  isoCode     String            @unique // ISO 3166-1 alpha-2 standard (e.g. IN, CN, US, GB)
+  region      String
+  flagEmoji   String
+  laws        CyberLaw[]        // Legacy flat relation preserved for backwards compatibility
+  coverages   CountryCoverage[] // Country-level category coverage & UNCTAD baseline tracking
+  instruments LegalInstrument[] // Hierarchical legal instruments
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 
   @@index([isoCode])
   @@index([name])
 }
 
+model LegalCategory {
+  id             String            @id @default(cuid())
+  key            String            @unique // e.g. "cybercrime", "data-protection", "cybersecurity", "electronic-transactions", "digital-evidence", "online-fraud", "critical-infrastructure", "consumer-protection", "indirect-taxation"
+  name           String            // e.g. "Cybercrime", "Data Protection & Privacy"
+  description    String
+  unctadBaseline Boolean           @default(false) // True if one of UNCTAD's 5 core pillars
+  unctadArea     String?           // e.g. "E-transactions", "Data protection and privacy", "Cybercrime", "Consumer protection", "Indirect taxation"
+  displayOrder   Int               @default(0)
+  coverages      CountryCoverage[]
+  instruments    LegalInstrument[]
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  @@index([key])
+  @@index([unctadBaseline])
+}
+
+model CountryCoverage {
+  id                    String        @id @default(cuid())
+  countryId             String
+  country               Country       @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  categoryId            String
+  category              LegalCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  // Research & Coverage Status
+  // "NOT_RESEARCHED" | "RESEARCH_PENDING" | "PARTIALLY_RESEARCHED" | "RESEARCH_COMPLETED" | "VERIFIED" | "NOT_APPLICABLE" | "NEEDS_REVIEW"
+  coverageStatus        String        @default("NOT_RESEARCHED")
+
+  // UNCTAD Baseline indicators
+  unctadBaselineCovered Boolean?      // true if UNCTAD notes legislation exists
+  unctadBaselineStatus  String?       // "Legislation exists", "Draft legislation", "No data", etc.
+  unctadLastChecked     DateTime?
+
+  // Metrics & tracking
+  verifiedCount         Int           @default(0)
+  unverifiedCount       Int           @default(0)
+  confidenceLevel       String        @default("MEDIUM") // LOW, MEDIUM, HIGH
+
+  lastResearchedDate    DateTime?
+  lastVerifiedDate      DateTime?
+  researchNotes         String?
+  assessmentSource      String?       // e.g., "UNCTAD Cyberlaw Tracker (2024)", "Official Gazette Review"
+
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  @@unique([countryId, categoryId])
+  @@index([countryId])
+  @@index([categoryId])
+  @@index([coverageStatus])
+}
+
+model LegalInstrument {
+  id                   String            @id @default(cuid())
+  title                String            // Common / English title (e.g. "Information Technology Act, 2000")
+  officialTitle        String?           // Official statutory / vernacular title
+  shortTitle           String?           // e.g. "IT Act", "DPDP Act", "CFAA"
+  instrumentType       String            // ACT, LAW, CODE_PROVISION, REGULATION, RULE, DIRECTIVE, DECREE, AMENDMENT, NOTIFICATION, SECTOR_REGULATION, TREATY, FRAMEWORK, STRATEGY
+
+  countryId            String
+  country              Country           @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  categoryId           String
+  category             LegalCategory     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  jurisdictionLevel    String            @default("NATIONAL") // NATIONAL, FEDERAL, STATE_PROVINCIAL, REGIONAL_SUPRANATIONAL
+
+  yearEnacted          Int?
+  effectiveDate        DateTime?
+  currentStatus        String            @default("IN_FORCE") // IN_FORCE, REPEALED, PENDING_ENFORCEMENT, DRAFT, SUNSET
+  amendmentStatus      String            @default("ORIGINAL") // ORIGINAL, AMENDED, CONSOLIDATED
+  isPrimaryLegislation Boolean           @default(true)
+
+  summary              String
+  keyProvisionsText    String?           // Pipe-delimited or summary string for quick access
+  issuingAuthority     String            // Ministry, regulator, or court
+
+  // Verification & Provenance
+  verificationStatus   String            @default("VERIFIED") // VERIFIED, UNVERIFIED, SAMPLE, NEEDS_REVIEW, IN_PROGRESS
+  isSampleData         Boolean           @default(false)
+  lastVerifiedDate     DateTime?
+  researchNotes        String?
+
+  // Direct Source links
+  officialUrl          String?
+  sourceName           String?
+  sourceUrl            String?
+
+  // Hierarchy: Subordinate regulation or amendment linked to parent statute
+  parentInstrumentId   String?
+  parentInstrument     LegalInstrument?  @relation("InstrumentHierarchy", fields: [parentInstrumentId], references: [id], onDelete: SetNull)
+  childInstruments     LegalInstrument[] @relation("InstrumentHierarchy")
+
+  // Structured relations
+  provisions           LegalProvision[]
+  sources              LegalSource[]
+
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+
+  @@index([countryId])
+  @@index([categoryId])
+  @@index([instrumentType])
+  @@index([verificationStatus])
+  @@index([yearEnacted])
+}
+
+model LegalProvision {
+  id               String          @id @default(cuid())
+  instrumentId     String
+  instrument       LegalInstrument @relation(fields: [instrumentId], references: [id], onDelete: Cascade)
+
+  articleNumber    String?         // e.g. "Section 43", "Article 83"
+  heading          String?         // e.g. "Penalty for unauthorized access"
+  content          String          // Core legal requirement or rule
+  penaltyDetails   String?         // Specific fines / prison terms
+  reportingMandate String?         // Incident notification deadlines (e.g. "6 hours", "72 hours")
+
+  displayOrder     Int             @default(0)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  @@index([instrumentId])
+}
+
+model LegalSource {
+  id            String          @id @default(cuid())
+  instrumentId  String
+  instrument    LegalInstrument @relation(fields: [instrumentId], references: [id], onDelete: Cascade)
+
+  name          String          // e.g. "Official Gazette of India", "Gov.uk Legislation"
+  url           String
+  sourceType    String          // "OFFICIAL_GAZETTE", "LEGISLATION_PORTAL", "REGULATOR_SITE", "UNCTAD_TRACKER", "SECONDARY_ACADEMIC"
+  isOfficial    Boolean         @default(true)
+  retrievedDate DateTime?
+
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  @@index([instrumentId])
+}
+
+// Legacy flat CyberLaw model (preserved for zero regression)
 model CyberLaw {
   id                 String   @id @default(cuid())
   title              String
   year               Int
-  category           String   // e.g. Cybercrime, Data Protection, Privacy, Cybersecurity, Electronic Transactions, Digital Evidence, Online Fraud, Intellectual Property, Critical Infrastructure
+  category           String
   summary            String
-  keyProvisions      String   // Stored as JSON string or multi-line text list
-  authority          String   // Responsible agency/ministry
+  keyProvisions      String
+  authority          String
   officialUrl        String
-  sourceName         String   // Source attribution (e.g. UNCTAD, Official Gazette)
+  sourceName         String
   sourceUrl          String
   lastUpdated        String
-  availabilityStatus String   @default("comprehensive") // comprehensive, specific, partial, unavailable, unknown
-  isSampleData       Boolean  @default(true)
+  availabilityStatus String   @default("comprehensive")
+  isSampleData       Boolean  @default(false)
   countryId          String
   country            Country  @relation(fields: [countryId], references: [id], onDelete: Cascade)
   createdAt          DateTime @default(now())
@@ -60,12 +205,11 @@ model NewsArticle {
   imageUrl       String?
   author         String?
   publishedAt    DateTime
-  category       String    // e.g. AI-Powered Attacks, AI Agent Security, LLM Security, Prompt Injection, AI Malware, Deepfake Threats, AI Vulnerabilities, AI Security Research, AI Cybersecurity Regulation, AI Security Tools, General AI Security
-  threatLevel    String    // Low, Medium, High, Critical
+  category       String
+  threatLevel    String
   relevanceScore Float     @default(0.0)
   isRelevant     Boolean   @default(true)
 
-  // Optional fields reserved for future AI processing layer
   aiSummary      String?
   whyItMatters   String?
   aiProcessedAt  DateTime?

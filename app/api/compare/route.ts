@@ -9,6 +9,7 @@ export interface StandardCategory {
   categoryName: string
   description: string
   aliases: string[]
+  unctadBaseline?: boolean
 }
 
 export const COMPARISON_CATEGORIES: StandardCategory[] = [
@@ -17,56 +18,103 @@ export const COMPARISON_CATEGORIES: StandardCategory[] = [
     categoryName: 'Cybercrime Legislation',
     description: 'Statutory provisions penalizing computer system intrusions, malware deployment, unauthorized access, and cyber sabotage.',
     aliases: ['cybercrime', 'computer crime', 'hacking', 'unauthorized access'],
+    unctadBaseline: true,
   },
   {
     categoryKey: 'data-protection',
-    categoryName: 'Data Protection',
+    categoryName: 'Data Protection & Privacy',
     description: 'Comprehensive statutory frameworks regulating processing of personal data, consent, and individual data rights.',
-    aliases: ['data protection', 'gdpr', 'personal data', 'privacy law'],
-  },
-  {
-    categoryKey: 'privacy',
-    categoryName: 'Privacy',
-    description: 'Constitutional or statutory rights protecting personal privacy, surveillance limits, and digital identity rights.',
-    aliases: ['privacy', 'personal privacy', 'habeas data', 'digital rights'],
+    aliases: ['data protection', 'gdpr', 'personal data', 'privacy law', 'privacy'],
+    unctadBaseline: true,
   },
   {
     categoryKey: 'cybersecurity',
     categoryName: 'Cybersecurity Framework',
     description: 'National cybersecurity strategies, incident reporting mandates, standards, and regulatory supervisory authorities.',
-    aliases: ['cybersecurity', 'network security', 'information security', 'cyber defense'],
+    aliases: ['cybersecurity', 'network security', 'information security', 'cyber defense', 'directives'],
+    unctadBaseline: false,
   },
   {
     categoryKey: 'electronic-transactions',
     categoryName: 'Electronic Transactions / E-Commerce',
     description: 'Legal validity of electronic records, digital signatures, e-commerce, and cryptographic authentication.',
     aliases: ['electronic transactions', 'e-commerce', 'digital signatures', 'electronic commerce'],
-  },
-  {
-    categoryKey: 'digital-evidence',
-    categoryName: 'Digital Evidence',
-    description: 'Rules governing admissibility, chain of custody, and forensic handling of electronic evidence in court.',
-    aliases: ['digital evidence', 'electronic evidence', 'forensic evidence'],
-  },
-  {
-    categoryKey: 'online-fraud',
-    categoryName: 'Online Fraud',
-    description: 'Legal sanctions targeting financial cyber scams, online identity theft, phishing, and digital extortion.',
-    aliases: ['online fraud', 'cyber fraud', 'financial scam', 'phishing', 'online safety'],
+    unctadBaseline: true,
   },
   {
     categoryKey: 'critical-infrastructure',
     categoryName: 'Critical Infrastructure Protection',
     description: 'Special security mandates protecting energy, health, finance, water, and transport information systems.',
     aliases: ['critical infrastructure', 'kritis', 'cii', 'essential services'],
+    unctadBaseline: false,
   },
   {
-    categoryKey: 'intellectual-property',
-    categoryName: 'Intellectual Property in Digital Space',
-    description: 'Copyright protection for software, digital trade secrets, domain names, and digital trademark enforcement.',
-    aliases: ['intellectual property', 'digital copyright', 'software patent', 'trade secrets'],
+    categoryKey: 'digital-evidence',
+    categoryName: 'Digital Evidence & Forensics',
+    description: 'Rules governing admissibility, chain of custody, and forensic handling of electronic evidence in court.',
+    aliases: ['digital evidence', 'electronic evidence', 'forensic evidence'],
+    unctadBaseline: false,
+  },
+  {
+    categoryKey: 'online-fraud',
+    categoryName: 'Online Fraud & Financial Crime',
+    description: 'Legal sanctions targeting financial cyber scams, online identity theft, phishing, and digital extortion.',
+    aliases: ['online fraud', 'cyber fraud', 'financial scam', 'phishing', 'online safety'],
+    unctadBaseline: false,
+  },
+  {
+    categoryKey: 'consumer-protection',
+    categoryName: 'Online Consumer Protection',
+    description: 'Consumer rights in electronic contracts, unfair commercial terms, and dispute mechanisms.',
+    aliases: ['consumer protection', 'consumer rights', 'e-consumer'],
+    unctadBaseline: true,
+  },
+  {
+    categoryKey: 'indirect-taxation',
+    categoryName: 'Digital Economy & Indirect Taxation',
+    description: 'Cross-border digital supply taxation, VAT/GST regimes on electronic services, and marketplace reporting.',
+    aliases: ['indirect taxation', 'digital tax', 'vat', 'gst'],
+    unctadBaseline: true,
   },
 ]
+
+export interface ProvisionSummary {
+  articleNumber?: string | null
+  heading?: string | null
+  content: string
+  penaltyDetails?: string | null
+  reportingMandate?: string | null
+}
+
+export interface InstrumentSummary {
+  id: string
+  title: string
+  shortTitle?: string | null
+  instrumentType: string
+  year: number | null
+  category: string
+  summary: string
+  keyProvisions: string
+  authority: string
+  officialUrl?: string | null
+  sourceName?: string | null
+  sourceUrl?: string | null
+  lastUpdated?: string | null
+  verificationStatus: string
+  provisions: ProvisionSummary[]
+}
+
+export interface CountryComparisonCell {
+  coverageStatus: string
+  coverageLabel: string
+  unctadBaselineCovered?: boolean | null
+  unctadBaselineStatus?: string | null
+  verifiedCount: number
+  hasLaw: boolean
+  confidenceLevel: string
+  researchNotes?: string | null
+  instruments: InstrumentSummary[]
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -104,12 +152,29 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Fetch countries from DB
+    // Fetch countries from DB with new hierarchy
     const countries = await prisma.country.findMany({
       where: {
         isoCode: { in: uniqueCodes },
       },
       include: {
+        coverages: {
+          include: {
+            category: true,
+          },
+        },
+        instruments: {
+          include: {
+            category: true,
+            provisions: {
+              orderBy: { displayOrder: 'asc' },
+            },
+            sources: true,
+          },
+          orderBy: {
+            yearEnacted: 'desc',
+          },
+        },
         laws: true,
       },
     })
@@ -133,43 +198,87 @@ export async function GET(request: NextRequest) {
 
     // Build structured comparison response
     const categoryResults = COMPARISON_CATEGORIES.map((cat) => {
-      const countryResults: Record<string, any> = {}
+      const countryResults: Record<string, CountryComparisonCell> = {}
 
       orderedCountries.forEach((country) => {
-        // Find laws matching category name or aliases
+        // Find matching coverage record
+        const coverage = country.coverages.find(
+          (cov) =>
+            cov.category?.key === cat.categoryKey ||
+            cov.category?.name.toLowerCase().includes(cat.categoryKey)
+        )
+
+        // Find instruments matching category key or aliases
+        const matchingInstruments = country.instruments.filter((inst) => {
+          const instCatKey = inst.category?.key?.toLowerCase() || ''
+          const instCatName = inst.category?.name?.toLowerCase() || ''
+          const instTitle = inst.title.toLowerCase()
+          return (
+            instCatKey === cat.categoryKey ||
+            cat.aliases.some(
+              (alias) =>
+                instCatKey.includes(alias) ||
+                instCatName.includes(alias) ||
+                instTitle.includes(alias)
+            )
+          )
+        })
+
+        // Also check legacy laws for fallback
         const matchingLaws = country.laws.filter((law) => {
           const lCat = law.category.toLowerCase()
           const lTitle = law.title.toLowerCase()
           return cat.aliases.some((alias) => lCat.includes(alias) || lTitle.includes(alias))
         })
 
-        if (matchingLaws.length > 0) {
-          // Determine status based on laws
-          const hasComprehensive = matchingLaws.some((l) => l.availabilityStatus === 'comprehensive')
-          const hasSpecific = matchingLaws.some((l) => l.availabilityStatus === 'specific')
-          const hasPartial = matchingLaws.some((l) => l.availabilityStatus === 'partial')
+        const hasInstruments = matchingInstruments.length > 0 || matchingLaws.length > 0
+        const verifiedCount = matchingInstruments.length > 0 ? matchingInstruments.length : matchingLaws.length
 
-          let status = 'specific'
-          let statusLabel = '✓ Specific legislation exists'
+        const coverageStatus = coverage?.coverageStatus || (hasInstruments ? 'PARTIALLY_RESEARCHED' : 'NOT_RESEARCHED')
+        let coverageLabel = 'Not yet documented in this database'
 
-          if (hasComprehensive) {
-            status = 'comprehensive'
-            statusLabel = '✓ Comprehensive legislation'
-          } else if (hasPartial) {
-            status = 'partial'
-            statusLabel = '⚠ Partial / sector-specific legislation'
-          } else if (hasSpecific) {
-            status = 'specific'
-            statusLabel = '✓ Specific legislation exists'
-          }
+        if (coverageStatus === 'VERIFIED' || coverageStatus === 'RESEARCH_COMPLETED') {
+          coverageLabel = `✓ ${verifiedCount} Verified Instrument(s)`
+        } else if (coverageStatus === 'PARTIALLY_RESEARCHED') {
+          coverageLabel = `⚡ ${verifiedCount} Documented (Research ongoing)`
+        } else if (cat.unctadBaseline) {
+          coverageLabel = 'Pending Research (UNCTAD: Legislation exists)'
+        } else {
+          coverageLabel = 'Information not currently documented in CyberLaw Atlas'
+        }
 
-          countryResults[country.isoCode] = {
-            status,
-            statusLabel,
-            hasLaw: true,
-            laws: matchingLaws.map((l) => ({
+        const mappedInstruments: InstrumentSummary[] = matchingInstruments.map((inst) => ({
+          id: inst.id,
+          title: inst.title,
+          shortTitle: inst.shortTitle,
+          instrumentType: inst.instrumentType,
+          year: inst.yearEnacted,
+          category: inst.category?.name || cat.categoryName,
+          summary: inst.summary,
+          keyProvisions: inst.keyProvisionsText || '',
+          authority: inst.issuingAuthority,
+          officialUrl: inst.officialUrl,
+          sourceName: inst.sourceName,
+          sourceUrl: inst.sourceUrl,
+          lastUpdated: inst.lastVerifiedDate ? inst.lastVerifiedDate.toISOString().split('T')[0] : null,
+          verificationStatus: inst.verificationStatus,
+          provisions: inst.provisions.map((p) => ({
+            articleNumber: p.articleNumber,
+            heading: p.heading,
+            content: p.content,
+            penaltyDetails: p.penaltyDetails,
+            reportingMandate: p.reportingMandate,
+          })),
+        }))
+
+        // Fallback to legacy laws if no hierarchical instrument was populated
+        if (mappedInstruments.length === 0 && matchingLaws.length > 0) {
+          matchingLaws.forEach((l) => {
+            mappedInstruments.push({
               id: l.id,
               title: l.title,
+              shortTitle: l.title,
+              instrumentType: 'ACT',
               year: l.year,
               category: l.category,
               summary: l.summary,
@@ -179,16 +288,22 @@ export async function GET(request: NextRequest) {
               sourceName: l.sourceName,
               sourceUrl: l.sourceUrl,
               lastUpdated: l.lastUpdated,
-              availabilityStatus: l.availabilityStatus,
-            })),
-          }
-        } else {
-          countryResults[country.isoCode] = {
-            status: 'unavailable',
-            statusLabel: '✕ Information not currently available in our database',
-            hasLaw: false,
-            laws: [],
-          }
+              verificationStatus: 'VERIFIED',
+              provisions: [],
+            })
+          })
+        }
+
+        countryResults[country.isoCode] = {
+          coverageStatus,
+          coverageLabel,
+          unctadBaselineCovered: coverage?.unctadBaselineCovered ?? (cat.unctadBaseline ? true : null),
+          unctadBaselineStatus: coverage?.unctadBaselineStatus ?? (cat.unctadBaseline ? 'Legislation exists' : null),
+          verifiedCount,
+          hasLaw: hasInstruments,
+          confidenceLevel: coverage?.confidenceLevel || (hasInstruments ? 'HIGH' : 'MEDIUM'),
+          researchNotes: coverage?.researchNotes || null,
+          instruments: mappedInstruments,
         }
       })
 
@@ -196,6 +311,7 @@ export async function GET(request: NextRequest) {
         categoryKey: cat.categoryKey,
         categoryName: cat.categoryName,
         description: cat.description,
+        unctadBaseline: cat.unctadBaseline ?? false,
         countryResults,
       }
     })
@@ -207,7 +323,8 @@ export async function GET(request: NextRequest) {
         isoCode: c.isoCode,
         region: c.region,
         flagEmoji: c.flagEmoji,
-        lawCount: c.laws.length,
+        instrumentCount: c.instruments.length,
+        lawCount: c.instruments.length || c.laws.length,
       })),
       categories: categoryResults,
     })

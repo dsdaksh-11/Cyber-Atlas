@@ -23,15 +23,10 @@ const FEATURED_SUGGESTIONS: SearchItem[] = [
 
 export function CountrySearch() {
   const [query, setQuery] = useState('')
-  const [suggestions, setSuggestions] = useState<SearchItem[]>(FEATURED_SUGGESTIONS)
   const [isOpen, setIsOpen] = useState(false)
   const [allCountries, setAllCountries] = useState<SearchItem[]>(FEATURED_SUGGESTIONS)
-  const router = Router()
+  const router = useRouter()
   const wrapperRef = useRef<HTMLDivElement>(null)
-
-  function Router() {
-    return useRouter()
-  }
 
   // Fetch available countries from API for complete autocomplete
   useEffect(() => {
@@ -51,23 +46,19 @@ export function CountrySearch() {
     loadCountries()
   }, [])
 
-  // Filter autocomplete suggestions based on query
-  useEffect(() => {
+  // Derive autocomplete suggestions dynamically based on query
+  const suggestions = React.useMemo(() => {
     if (!query.trim()) {
-      setSuggestions(allCountries)
-      return
+      return allCountries
     }
-
     const q = query.trim().toLowerCase()
-    const filtered = allCountries.filter(
+    return allCountries.filter(
       (c) =>
         c.name.toLowerCase().includes(q) ||
         c.isoCode.toLowerCase() === q ||
         c.isoCode.toLowerCase().startsWith(q) ||
         c.region.toLowerCase().includes(q)
     )
-
-    setSuggestions(filtered)
   }, [query, allCountries])
 
   // Close dropdown on outside click

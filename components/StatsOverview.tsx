@@ -1,41 +1,50 @@
 'use client'
 
 import React from 'react'
-import { Globe, BookOpen, ShieldCheck, Scale } from 'lucide-react'
+import { Globe, BookOpen, ShieldCheck, Layers } from 'lucide-react'
 
 interface StatsProps {
   countryCount?: number
   lawCount?: number
+  instrumentCount?: number
+  coverageCount?: number
 }
 
-export function StatsOverview({ countryCount = 4, lawCount = 16 }: StatsProps) {
+export function StatsOverview({
+  countryCount = 48,
+  lawCount = 112,
+  instrumentCount,
+  coverageCount = 432,
+}: StatsProps) {
+  const displayInstruments = instrumentCount ?? lawCount
+
   const stats = [
     {
       icon: Globe,
       label: 'Tracked Jurisdictions',
       value: countryCount,
-      subtext: 'Searchable by ISO code & country name',
+      subtext: '48 sovereign nations across 6 continents',
       color: 'text-cyan-400',
     },
     {
       icon: BookOpen,
-      label: 'Indexed Cyber Laws',
-      value: lawCount,
-      subtext: 'Structured acts, policies & decrees',
+      label: 'Verified Instruments',
+      value: displayInstruments,
+      subtext: 'Primary acts, decrees & penal codes',
       color: 'text-blue-400',
     },
     {
       icon: ShieldCheck,
       label: 'Taxonomy Categories',
-      value: '9+',
-      subtext: 'Cybercrime, Data Privacy, Infrastructure',
+      value: '9 Areas',
+      subtext: '5 UNCTAD baseline + 4 specialized',
       color: 'text-emerald-400',
     },
     {
-      icon: Scale,
-      label: 'Attribution Compliance',
-      value: '100%',
-      subtext: 'Verified against official legal gazettes',
+      icon: Layers,
+      label: 'Coverage Matrix',
+      value: `${coverageCount}`,
+      subtext: 'Monitored with transparent research backlog',
       color: 'text-violet-400',
     },
   ]

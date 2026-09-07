@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { AlertCircle, ArrowLeft, Search, Globe, ShieldQuestion } from 'lucide-react'
+import { AlertCircle, Search, Globe, ShieldQuestion } from 'lucide-react'
 
 export default function CountryNotFound() {
   const suggestedCountries = [

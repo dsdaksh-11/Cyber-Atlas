@@ -5,22 +5,21 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import {
   Scale,
-  Plus,
   X,
   Search,
   CheckCircle2,
   AlertTriangle,
-  HelpCircle,
   ExternalLink,
   ChevronRight,
   Shield,
   FileText,
   Building2,
   Calendar,
-  Sparkles,
   RefreshCw,
   Info,
   ArrowLeft,
+  Clock,
+  Layers,
 } from 'lucide-react'
 
 interface CountryMeta {
@@ -29,35 +28,53 @@ interface CountryMeta {
   isoCode: string
   region: string
   flagEmoji: string
+  instrumentCount?: number
   lawCount?: number
 }
 
-interface LawDetail {
+interface ProvisionSummary {
+  articleNumber?: string | null
+  heading?: string | null
+  content: string
+  penaltyDetails?: string | null
+  reportingMandate?: string | null
+}
+
+interface InstrumentDetail {
   id: string
   title: string
-  year: number
+  shortTitle?: string | null
+  instrumentType: string
+  year: number | null
   category: string
   summary: string
   keyProvisions: string
   authority: string
-  officialUrl: string
-  sourceName: string
-  sourceUrl: string
-  lastUpdated: string
-  availabilityStatus: string
+  officialUrl?: string | null
+  sourceName?: string | null
+  sourceUrl?: string | null
+  lastUpdated?: string | null
+  verificationStatus: string
+  provisions: ProvisionSummary[]
 }
 
 interface CategoryCellResult {
-  status: 'comprehensive' | 'specific' | 'partial' | 'unavailable' | 'unknown'
-  statusLabel: string
+  coverageStatus: string
+  coverageLabel: string
+  unctadBaselineCovered?: boolean | null
+  unctadBaselineStatus?: string | null
+  verifiedCount: number
   hasLaw: boolean
-  laws: LawDetail[]
+  confidenceLevel: string
+  researchNotes?: string | null
+  instruments: InstrumentDetail[]
 }
 
 interface CategoryComparison {
   categoryKey: string
   categoryName: string
   description: string
+  unctadBaseline: boolean
   countryResults: Record<string, CategoryCellResult>
 }
 
@@ -82,7 +99,7 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
 
   const [selectedCodes, setSelectedCodes] = useState<string[]>(defaultCodes)
   const [comparisonData, setComparisonData] = useState<ComparisonData | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
 
   // Autocomplete state
@@ -91,41 +108,55 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Modal active law state
-  const [activeModalLaw, setActiveModalLaw] = useState<{
+  const [activeModalData, setActiveModalData] = useState<{
     country: CountryMeta
     categoryName: string
-    laws: LawDetail[]
+    instruments: InstrumentDetail[]
+    coverageStatus: string
+    researchNotes?: string | null
   } | null>(null)
 
-  // Fetch comparison matrix from API
-  const fetchComparison = async (codes: string[]) => {
-    if (codes.length < 2 || codes.length > 4) {
-      setError('Please select between 2 and 4 countries to generate a comparison matrix.')
-      return
-    }
+  // Load comparison on mount and code updates without synchronous cascading setState
+  useEffect(() => {
+    let isCancelled = false
 
-    setLoading(true)
-    setError(null)
-
-    try {
-      const res = await fetch(`/api/compare?countries=${codes.join(',')}`)
-      const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to fetch comparison data')
+    const loadComparison = async () => {
+      if (selectedCodes.length < 2 || selectedCodes.length > 4) {
+        setError('Please select between 2 and 4 countries to generate a comparison matrix.')
+        setLoading(false)
+        return
       }
 
-      setComparisonData(data)
-    } catch (err: any) {
-      setError(err.message || 'An error occurred while loading comparison matrix.')
-    } finally {
-      setLoading(false)
-    }
-  }
+      setLoading(true)
+      setError(null)
 
-  // Load comparison on mount and code updates
-  useEffect(() => {
-    fetchComparison(selectedCodes)
+      try {
+        const res = await fetch(`/api/compare?countries=${selectedCodes.join(',')}`)
+        const data = await res.json()
+
+        if (!isCancelled) {
+          if (!res.ok) {
+            setError(data.error || 'Failed to fetch comparison data')
+          } else {
+            setComparisonData(data)
+          }
+        }
+      } catch (err: unknown) {
+        if (!isCancelled) {
+          setError(err instanceof Error ? err.message : 'An error occurred while loading comparison matrix.')
+        }
+      } finally {
+        if (!isCancelled) {
+          setLoading(false)
+        }
+      }
+    }
+
+    loadComparison()
+
+    return () => {
+      isCancelled = true
+    }
   }, [selectedCodes])
 
   // Close dropdown on click outside
@@ -187,15 +218,15 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
           <ArrowLeft className="h-4 w-4" />
           <span>Back to CyberLaw Atlas Search</span>
         </Link>
-        <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/60 px-3 py-1 text-xs font-semibold text-cyan-300">
+        <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-950/60 px-3.5 py-1 text-xs font-semibold text-cyan-300">
           <Scale className="h-3.5 w-3.5" />
-          <span>Multi-Jurisdictional Comparative Matrix</span>
+          <span>Multi-Jurisdictional Comparative Legal Intelligence</span>
         </div>
         <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-5xl font-sans">
           Compare Global <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400">Cyber Laws</span>
         </h1>
         <p className="text-sm sm:text-base text-slate-300">
-          Analyze legal frameworks, data protection mandates, and cybercrime penalties side-by-side across 2 to 4 countries aligned with UNCTAD taxonomy.
+          Analyze legal frameworks, data privacy regimes, statutory penalties, and UNCTAD baseline indicators side-by-side across sovereign jurisdictions.
         </p>
       </div>
 
@@ -252,7 +283,7 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
                 </span>
                 <button
                   onClick={() => handleRemoveCountry(code)}
-                  className="p-1 text-slate-400 hover:text-red-400 transition-colors ml-1"
+                  className="p-1 text-slate-400 hover:text-red-400 transition-colors ml-1 cursor-pointer"
                   title="Remove from comparison"
                 >
                   <X className="h-4 w-4" />
@@ -273,7 +304,7 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
                     setIsDropdownOpen(true)
                   }}
                   onFocus={() => setIsDropdownOpen(true)}
-                  placeholder="+ Add another country (e.g. Germany, Japan, Brazil)..."
+                  placeholder="+ Add another jurisdiction..."
                   className="w-full rounded-xl border border-slate-700 bg-slate-950/80 pl-9 pr-4 py-2 text-sm text-white placeholder-slate-400 focus:border-cyan-400 focus:outline-none focus:ring-1 focus:ring-cyan-500/30 transition-all"
                 />
                 <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
@@ -319,28 +350,24 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
         </div>
       )}
 
-      {/* Legend & Tooltip Explanation */}
+      {/* Status Key & Methodology Legend */}
       <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-300">
         <div className="flex items-center gap-2">
           <Info className="h-4 w-4 text-cyan-400 shrink-0" />
-          <span className="font-semibold text-white">Status Key & Taxonomy:</span>
+          <span className="font-semibold text-white">Coverage Methodology Status:</span>
         </div>
         <div className="flex flex-wrap items-center gap-4">
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 font-medium">
             <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-            Comprehensive Legislation
+            Verified Statutory Instruments Documented
           </span>
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 font-medium">
-            <CheckCircle2 className="h-3.5 w-3.5 text-cyan-400" />
-            Specific Statute Exists
+            <Layers className="h-3.5 w-3.5 text-cyan-400" />
+            UNCTAD Baseline: Legislation Exists
           </span>
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-950/60 border border-amber-500/30 text-amber-300 font-medium">
-            <AlertTriangle className="h-3.5 w-3.5 text-amber-400" />
-            Partial / Sector-Specific
-          </span>
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-950/60 border border-slate-700 text-slate-400 font-medium">
-            <X className="h-3.5 w-3.5 text-slate-500" />
-            Information Not Available
+            <Clock className="h-3.5 w-3.5 text-amber-400" />
+            Pending Detailed Statutory Research
           </span>
         </div>
       </div>
@@ -358,11 +385,11 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
               {/* Sticky Header */}
               <thead className="bg-slate-950/90 border-b border-slate-800 sticky top-0 z-20 backdrop-blur-md">
                 <tr>
-                  <th className="p-4 sm:p-6 text-xs font-bold uppercase tracking-wider text-slate-400 w-1/4 min-w-[200px]">
-                    Legal Subject Area
+                  <th className="p-4 sm:p-6 text-xs font-bold uppercase tracking-wider text-slate-400 w-1/4 min-w-[220px]">
+                    Legal Category & UNCTAD Area
                   </th>
                   {comparisonData.selectedCountries.map((country) => (
-                    <th key={country.isoCode} className="p-4 sm:p-6 text-center border-l border-slate-800 min-w-[220px]">
+                    <th key={country.isoCode} className="p-4 sm:p-6 text-center border-l border-slate-800 min-w-[240px]">
                       <div className="flex flex-col items-center gap-1.5">
                         <span className="text-3xl sm:text-4xl">{country.flagEmoji}</span>
                         <span className="text-base font-bold text-white">{country.name}</span>
@@ -371,7 +398,7 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
                             {country.isoCode}
                           </span>
                           <span className="text-xs text-slate-400">
-                            {country.lawCount} Laws
+                            {country.instrumentCount || country.lawCount || 0} Instruments
                           </span>
                         </div>
                       </div>
@@ -380,7 +407,7 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
                 </tr>
               </thead>
 
-              {/* Rows for 9 Standard Categories */}
+              {/* Rows for 9 Categories */}
               <tbody className="divide-y divide-slate-800/80">
                 {comparisonData.categories.map((cat, idx) => (
                   <tr
@@ -389,12 +416,17 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
                   >
                     {/* Category Title & Description */}
                     <td className="p-4 sm:p-6 align-top">
-                      <div className="space-y-1">
+                      <div className="space-y-1.5">
                         <div className="font-bold text-white text-base flex items-center gap-2">
                           <FileText className="h-4 w-4 text-cyan-400 shrink-0" />
                           <span>{cat.categoryName}</span>
                         </div>
-                        <p className="text-xs text-slate-400 leading-relaxed">
+                        {cat.unctadBaseline && (
+                          <span className="inline-flex items-center gap-1 rounded bg-cyan-950/80 px-2 py-0.5 text-[10px] font-mono text-cyan-400 border border-cyan-800/50">
+                            UNCTAD Core Pillar
+                          </span>
+                        )}
+                        <p className="text-xs text-slate-400 leading-relaxed pt-1">
                           {cat.description}
                         </p>
                       </div>
@@ -410,70 +442,77 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
                           key={country.isoCode}
                           className="p-4 sm:p-6 align-top border-l border-slate-800/80 text-center"
                         >
-                          {res.hasLaw ? (
+                          {res.hasLaw && res.instruments.length > 0 ? (
                             <div className="space-y-3">
                               {/* Status Badge */}
-                              {res.status === 'comprehensive' && (
+                              <div className="flex justify-center">
                                 <span className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-950/80 px-3 py-1.5 text-xs font-semibold text-emerald-300 border border-emerald-500/40 shadow-md">
-                                  <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                                  <span>Comprehensive</span>
+                                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                                  <span>{res.verifiedCount} Verified Instrument(s)</span>
                                 </span>
-                              )}
+                              </div>
 
-                              {res.status === 'specific' && (
-                                <span className="inline-flex items-center gap-1.5 rounded-xl bg-cyan-950/80 px-3 py-1.5 text-xs font-semibold text-cyan-300 border border-cyan-500/40 shadow-md">
-                                  <CheckCircle2 className="h-4 w-4 text-cyan-400" />
-                                  <span>Specific Law</span>
-                                </span>
-                              )}
-
-                              {res.status === 'partial' && (
-                                <span className="inline-flex items-center gap-1.5 rounded-xl bg-amber-950/80 px-3 py-1.5 text-xs font-semibold text-amber-300 border border-amber-500/40 shadow-md">
-                                  <AlertTriangle className="h-4 w-4 text-amber-400" />
-                                  <span>Sector Specific</span>
-                                </span>
-                              )}
-
-                              {/* Law Previews & Inspect Button */}
+                              {/* Instrument Previews */}
                               <div className="space-y-2 text-left">
-                                {res.laws.slice(0, 2).map((law) => (
+                                {res.instruments.slice(0, 2).map((inst) => (
                                   <div
-                                    key={law.id}
+                                    key={inst.id}
                                     className="rounded-xl border border-slate-800 bg-slate-950/70 p-2.5 text-xs space-y-1"
                                   >
                                     <div className="font-semibold text-slate-200 line-clamp-1">
-                                      {law.title}
+                                      {inst.title}
                                     </div>
                                     <div className="flex items-center justify-between text-[11px] text-slate-400">
-                                      <span>Enacted: {law.year}</span>
-                                      <span className="text-cyan-400 font-mono">{law.category}</span>
+                                      <span>Enacted: {inst.year || 'N/A'}</span>
+                                      <span className="text-cyan-400 font-mono text-[10px]">
+                                        {inst.instrumentType}
+                                      </span>
                                     </div>
+                                    {inst.authority && (
+                                      <div className="text-[10px] text-slate-400 line-clamp-1">
+                                        Auth: {inst.authority}
+                                      </div>
+                                    )}
                                   </div>
                                 ))}
 
-                                <button
-                                  onClick={() =>
-                                    setActiveModalLaw({
-                                      country,
-                                      categoryName: cat.categoryName,
-                                      laws: res.laws,
-                                    })
-                                  }
-                                  className="w-full flex items-center justify-center gap-1 text-xs font-semibold text-cyan-400 hover:text-cyan-300 hover:underline py-1 transition-colors cursor-pointer"
-                                >
-                                  <span>View Detailed Statute ({res.laws.length})</span>
-                                  <ChevronRight className="h-3.5 w-3.5" />
-                                </button>
+                                {res.instruments.length > 2 && (
+                                  <div className="text-[11px] text-cyan-400 text-center font-medium">
+                                    + {res.instruments.length - 2} more instrument(s)
+                                  </div>
+                                )}
                               </div>
+
+                              {/* Inspect Button */}
+                              <button
+                                onClick={() =>
+                                  setActiveModalData({
+                                    country,
+                                    categoryName: cat.categoryName,
+                                    instruments: res.instruments,
+                                    coverageStatus: res.coverageStatus,
+                                    researchNotes: res.researchNotes,
+                                  })
+                                }
+                                className="w-full inline-flex items-center justify-center gap-1 rounded-lg border border-slate-700 bg-slate-800/90 py-1.5 px-3 text-xs font-semibold text-slate-200 hover:border-cyan-500/50 hover:bg-slate-800 hover:text-white transition-all cursor-pointer"
+                              >
+                                <span>View Provisions & Sanctions</span>
+                                <ChevronRight className="h-3.5 w-3.5 text-cyan-400" />
+                              </button>
                             </div>
                           ) : (
-                            <div className="py-4 space-y-2">
-                              <span className="inline-flex items-center gap-1 rounded-xl bg-slate-950 px-3 py-1.5 text-xs font-semibold text-slate-300 border border-slate-800">
-                                <X className="h-3.5 w-3.5 text-slate-400" />
-                                <span>Information Not Available</span>
-                              </span>
-                              <p className="text-[11px] text-slate-300 max-w-[180px] mx-auto">
-                                No specific statutory record currently ingested in our database.
+                            /* Unresearched or Baseline Only Cell */
+                            <div className="space-y-2 py-2">
+                              <div className="flex justify-center">
+                                <span className="inline-flex items-center gap-1 rounded-xl bg-slate-950 px-2.5 py-1 text-xs font-medium text-slate-400 border border-slate-800">
+                                  <Clock className="h-3 w-3 text-amber-400" />
+                                  <span>Pending Research</span>
+                                </span>
+                              </div>
+                              <p className="text-[11px] text-slate-400 leading-snug max-w-[200px] mx-auto">
+                                {cat.unctadBaseline
+                                  ? `UNCTAD Baseline: ${res.unctadBaselineStatus || 'Legislation exists'}. Individual statutes pending research in Atlas.`
+                                  : 'Not yet documented in this database.'}
                               </p>
                             </div>
                           )}
@@ -488,115 +527,135 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
         </div>
       ) : null}
 
-      {/* Detailed Modal Drawer */}
-      {activeModalLaw && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-cyan-500/40 bg-slate-900 p-6 sm:p-8 shadow-2xl space-y-6">
+      {/* Law & Provision Details Modal */}
+      {activeModalData && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm animate-in fade-in">
+          <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-slate-800 bg-slate-900 p-6 sm:p-8 shadow-2xl space-y-6">
+            <button
+              onClick={() => setActiveModalData(null)}
+              className="absolute right-5 top-5 rounded-full p-2 text-slate-400 hover:bg-slate-800 hover:text-white transition-colors cursor-pointer"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
             {/* Modal Header */}
-            <div className="flex items-start justify-between border-b border-slate-800 pb-4">
-              <div className="flex items-center gap-3">
-                <span className="text-3xl">{activeModalLaw.country.flagEmoji}</span>
+            <div className="space-y-1.5 border-b border-slate-800 pb-4">
+              <div className="flex items-center gap-2">
+                <span className="text-3xl">{activeModalData.country.flagEmoji}</span>
                 <div>
                   <h3 className="text-xl font-bold text-white">
-                    {activeModalLaw.country.name} ({activeModalLaw.country.isoCode})
+                    {activeModalData.country.name} — {activeModalData.categoryName}
                   </h3>
-                  <p className="text-xs text-cyan-400 font-semibold">
-                    Category: {activeModalLaw.categoryName}
+                  <p className="text-xs text-slate-400">
+                    {activeModalData.instruments.length} Documented Statutory Instrument(s)
                   </p>
                 </div>
               </div>
-              <button
-                onClick={() => setActiveModalLaw(null)}
-                className="rounded-xl border border-slate-800 p-2 text-slate-400 hover:bg-slate-800 hover:text-white transition-colors"
-              >
-                <X className="h-5 w-5" />
-              </button>
             </div>
 
-            {/* Modal Body: Law Details */}
+            {/* Modal Instruments List */}
             <div className="space-y-6">
-              {activeModalLaw.laws.map((law) => (
+              {activeModalData.instruments.map((inst) => (
                 <div
-                  key={law.id}
-                  className="rounded-2xl border border-slate-800 bg-slate-950 p-5 space-y-4 shadow-inner"
+                  key={inst.id}
+                  className="rounded-2xl border border-slate-800 bg-slate-950/80 p-5 space-y-3"
                 >
-                  <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
-                    <h4 className="text-base font-bold text-white">{law.title}</h4>
-                    <span className="rounded-md bg-cyan-950 px-2.5 py-1 text-xs font-semibold text-cyan-300 border border-cyan-800/60">
-                      Enacted {law.year}
-                    </span>
-                  </div>
-
-                  <div className="space-y-2">
-                    <h5 className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                      <FileText className="h-3.5 w-3.5 text-cyan-400" />
-                      Statutory Summary
-                    </h5>
-                    <p className="text-xs text-slate-300 leading-relaxed">{law.summary}</p>
-                  </div>
-
-                  {law.keyProvisions && (
-                    <div className="space-y-2">
-                      <h5 className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                        <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
-                        Key Legal Provisions
-                      </h5>
-                      <div className="rounded-xl bg-slate-900/90 p-3 text-xs text-slate-300 border border-slate-800/80 leading-relaxed font-mono">
-                        {law.keyProvisions}
+                  <div className="flex flex-wrap items-start justify-between gap-2 border-b border-slate-800/80 pb-3">
+                    <div>
+                      <h4 className="text-base font-bold text-white">{inst.title}</h4>
+                      <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400 pt-1">
+                        <span className="rounded bg-slate-900 px-2 py-0.5 border border-slate-800 text-cyan-300 font-mono">
+                          {inst.instrumentType}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1">
+                          <Calendar className="h-3 w-3 text-cyan-400" />
+                          Enacted {inst.year || 'N/A'}
+                        </span>
                       </div>
                     </div>
-                  )}
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-slate-800/80 text-xs">
-                    <div>
-                      <span className="text-slate-400 flex items-center gap-1">
-                        <Building2 className="h-3.5 w-3.5 text-cyan-400" />
-                        Enforcing Authority:
-                      </span>
-                      <span className="font-semibold text-slate-200 mt-0.5 block">
-                        {law.authority}
-                      </span>
-                    </div>
-
-                    <div>
-                      <span className="text-slate-400 flex items-center gap-1">
-                        <Calendar className="h-3.5 w-3.5 text-cyan-400" />
-                        Last Source Update:
-                      </span>
-                      <span className="font-semibold text-slate-200 mt-0.5 block">
-                        {law.lastUpdated}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="pt-2 flex flex-wrap items-center gap-3">
-                    {law.officialUrl && (
+                    {inst.officialUrl && (
                       <a
-                        href={law.officialUrl}
+                        href={inst.officialUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-cyan-400 hover:text-cyan-300 hover:underline"
+                        className="inline-flex items-center gap-1 rounded-lg border border-cyan-500/30 bg-cyan-950/60 px-2.5 py-1 text-xs font-medium text-cyan-300 hover:bg-cyan-900/60 transition-colors"
                       >
-                        <span>Official Legislation Source</span>
-                        <ExternalLink className="h-3.5 w-3.5" />
+                        <span>Official Gazette</span>
+                        <ExternalLink className="h-3 w-3" />
                       </a>
                     )}
-                    {law.sourceName && (
-                      <span className="text-[11px] text-slate-400 bg-slate-900 px-2 py-1 rounded border border-slate-800">
-                        Source: {law.sourceName}
-                      </span>
-                    )}
+                  </div>
+
+                  {/* Summary */}
+                  <div className="space-y-1 text-xs text-slate-300">
+                    <p className="font-semibold text-slate-400 uppercase tracking-wider text-[10px]">
+                      Summary
+                    </p>
+                    <p className="leading-relaxed">{inst.summary}</p>
+                  </div>
+
+                  {/* Structured Provisions */}
+                  {inst.provisions && inst.provisions.length > 0 ? (
+                    <div className="space-y-2 pt-2 border-t border-slate-800/60">
+                      <p className="font-semibold text-slate-400 uppercase tracking-wider text-[10px] flex items-center gap-1">
+                        <FileText className="h-3 w-3 text-cyan-400" />
+                        Key Provisions & Legal Sanctions
+                      </p>
+                      <ul className="space-y-2 text-xs text-slate-300">
+                        {inst.provisions.map((p, pIdx) => (
+                          <li key={pIdx} className="rounded-lg bg-slate-900/90 p-2.5 border border-slate-800/80 space-y-1">
+                            <div className="flex items-start gap-2">
+                              <CheckCircle2 className="h-3.5 w-3.5 text-cyan-400 shrink-0 mt-0.5" />
+                              <div className="flex-1">
+                                {p.articleNumber && (
+                                  <span className="font-mono font-bold text-cyan-400 mr-2">
+                                    [{p.articleNumber}]
+                                  </span>
+                                )}
+                                <span>{p.content}</span>
+                              </div>
+                            </div>
+                            {p.penaltyDetails && (
+                              <div className="text-[11px] text-rose-300 pl-5">
+                                <strong>Sanction:</strong> {p.penaltyDetails}
+                              </div>
+                            )}
+                            {p.reportingMandate && (
+                              <div className="text-[11px] text-blue-300 pl-5">
+                                <strong>Notification Rule:</strong> {p.reportingMandate}
+                              </div>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : inst.keyProvisions ? (
+                    <div className="space-y-1 text-xs text-slate-300 pt-2 border-t border-slate-800/60">
+                      <p className="font-semibold text-slate-400 uppercase tracking-wider text-[10px]">
+                        Provisions
+                      </p>
+                      <p className="leading-relaxed">{inst.keyProvisions}</p>
+                    </div>
+                  ) : null}
+
+                  {/* Authority */}
+                  <div className="flex items-center gap-2 text-xs text-slate-400 pt-2 border-t border-slate-800/60">
+                    <Building2 className="h-3.5 w-3.5 text-slate-400" />
+                    <span>Enforcing Authority:</span>
+                    <span className="text-slate-300 font-medium">{inst.authority}</span>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="text-right">
+            <div className="pt-2 text-center">
               <button
-                onClick={() => setActiveModalLaw(null)}
-                className="rounded-xl bg-slate-800 px-5 py-2.5 text-xs font-semibold text-white hover:bg-slate-700 transition-colors"
+                onClick={() => setActiveModalData(null)}
+                className="rounded-xl bg-cyan-500 px-6 py-2 text-xs font-bold text-slate-950 hover:bg-cyan-400 transition-colors cursor-pointer"
               >
-                Close Statute Details
+                Close Details
               </button>
             </div>
           </div>

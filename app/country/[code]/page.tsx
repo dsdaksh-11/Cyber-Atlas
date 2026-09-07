@@ -28,8 +28,8 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   return {
-    title: `${country.flagEmoji} ${country.name} (${country.isoCode}) Cyber Laws | CyberLaw Atlas`,
-    description: `Explore cybercrime, cybersecurity, and data privacy legislation of ${country.name} (${country.isoCode}). View legal summary, key provisions, and governing authorities.`,
+    title: `${country.flagEmoji} ${country.name} (${country.isoCode}) Cyber Laws & Legal Coverage | CyberLaw Atlas`,
+    description: `Explore cybercrime, cybersecurity, and data privacy legal instruments of ${country.name} (${country.isoCode}). View UNCTAD baseline indicators, verified statutes, and governing authorities.`,
   }
 }
 
@@ -39,7 +39,7 @@ export default async function CountryPage({ params }: PageProps) {
 
   const normalizedCode = normalizeCountryCode(code)
 
-  // Query database for country and associated cyber laws
+  // Query database for country, category coverages, hierarchical instruments, and legacy laws
   const country = await prisma.country.findFirst({
     where: {
       OR: [
@@ -48,6 +48,30 @@ export default async function CountryPage({ params }: PageProps) {
       ],
     },
     include: {
+      coverages: {
+        include: {
+          category: true,
+        },
+        orderBy: {
+          category: {
+            displayOrder: 'asc',
+          },
+        },
+      },
+      instruments: {
+        include: {
+          category: true,
+          provisions: {
+            orderBy: {
+              displayOrder: 'asc',
+            },
+          },
+          sources: true,
+        },
+        orderBy: {
+          yearEnacted: 'desc',
+        },
+      },
       laws: {
         orderBy: {
           year: 'desc',
