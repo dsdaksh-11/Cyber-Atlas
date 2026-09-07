@@ -22,7 +22,7 @@ export function IngestionBanner() {
               </span>
             </div>
             <p className="text-sm text-slate-400">
-              Future-ready, verified legal data pipeline ensuring zero hallucination and 100% source attribution.
+              Rigorous legal data pipeline ensuring zero hallucination, direct statutory source attribution, and multi-tier verification.
             </p>
           </div>
         </div>

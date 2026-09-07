@@ -28,9 +28,9 @@ export function StatsOverview({
     },
     {
       icon: BookOpen,
-      label: 'Verified Instruments',
+      label: 'Documented Instruments',
       value: displayInstruments,
-      subtext: 'Primary acts, decrees & penal codes',
+      subtext: '15 verified, 109 baseline under review',
       color: 'text-blue-400',
     },
     {

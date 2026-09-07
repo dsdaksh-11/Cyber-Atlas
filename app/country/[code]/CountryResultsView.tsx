@@ -52,6 +52,12 @@ interface CountryWithHierarchy {
     shortTitle?: string | null
     instrumentType: string
     yearEnacted?: number | null
+    scope?: string | null
+    currentStatus?: string | null
+    isDirectSource?: boolean | null
+    sourceDocumentType?: string | null
+    researchStatus?: string | null
+    inclusionExclusionNotes?: string | null
     summary: string
     keyProvisionsText?: string | null
     issuingAuthority: string
@@ -80,6 +86,7 @@ interface CountryWithHierarchy {
       url: string
       sourceType: string
       isOfficial: boolean
+      isDirect?: boolean
     }>
   }>
   laws?: Array<{
@@ -137,6 +144,11 @@ export function CountryResultsView({ country }: CountryResultsViewProps) {
         isSampleData: inst.isSampleData,
         provisions: inst.provisions,
         sources: inst.sources,
+        scope: inst.scope,
+        isDirectSource: inst.isDirectSource,
+        sourceDocumentType: inst.sourceDocumentType,
+        researchStatus: inst.researchStatus,
+        inclusionExclusionNotes: inst.inclusionExclusionNotes,
       }))
     }
     if (country.laws && country.laws.length > 0) {
@@ -256,9 +268,12 @@ export function CountryResultsView({ country }: CountryResultsViewProps) {
                     <Globe className="h-4 w-4 text-cyan-400" />
                     <span>{country.region} Region</span>
                     <span>•</span>
-                    <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                      <ShieldCheck className="h-4 w-4" />
-                      {totalVerifiedCount} Verified Legal Instruments Documented
+                    <span className="text-slate-300 font-semibold flex items-center gap-1.5">
+                      <ShieldCheck className="h-4 w-4 text-cyan-400" />
+                      <span>{normalizedInstruments.length} Documented Instruments</span>
+                      <span className="text-xs font-normal text-slate-400">
+                        ({totalVerifiedCount} Verified, {normalizedInstruments.length - totalVerifiedCount} Under Review)
+                      </span>
                     </span>
                   </p>
                 </div>
@@ -364,7 +379,7 @@ export function CountryResultsView({ country }: CountryResultsViewProps) {
               Legal Research & Provenance Methodology:
             </p>
             <p>
-              CyberLaw Atlas currently documents <strong className="text-cyan-300">{totalVerifiedCount} verified statutory instrument(s)</strong> in {country.name}. This does not necessarily represent every applicable law, subordinate decree, or sector-specific regulation. Missing categories indicate areas scheduled for future investigation in our{' '}
+              CyberLaw Atlas currently documents <strong className="text-white">{normalizedInstruments.length} legal instrument(s)</strong> in {country.name} ({totalVerifiedCount} independently verified against primary gazettes/statutes, {normalizedInstruments.length - totalVerifiedCount} baseline records under active review). This does not necessarily represent every applicable law, subordinate decree, or sector-specific regulation. Missing categories indicate areas scheduled for future investigation in our{' '}
               <span className="text-cyan-400 font-mono">research backlog</span> rather than an absence of legislation.
             </p>
           </div>

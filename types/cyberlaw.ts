@@ -61,6 +61,7 @@ export interface LegalSourceData {
   url: string
   sourceType: string
   isOfficial: boolean
+  isDirect?: boolean
   retrievedDate?: string | null
 }
 
@@ -102,7 +103,9 @@ export interface LegalInstrumentData {
   categoryId: string
   category?: LegalCategoryData
   jurisdictionLevel: string
+  scope?: string
   yearEnacted?: number | null
+  enactmentDate?: string | null
   effectiveDate?: string | null
   currentStatus: string
   amendmentStatus: string
@@ -111,10 +114,14 @@ export interface LegalInstrumentData {
   keyProvisionsText?: string | null
   issuingAuthority: string
   verificationStatus: VerificationStatus | string
+  researchStatus?: string
   isSampleData: boolean
   lastVerifiedDate?: string | null
   researchNotes?: string | null
+  inclusionExclusionNotes?: string | null
   officialUrl?: string | null
+  isDirectSource?: boolean
+  sourceDocumentType?: string | null
   sourceName?: string | null
   sourceUrl?: string | null
   parentInstrumentId?: string | null

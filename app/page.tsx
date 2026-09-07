@@ -184,12 +184,12 @@ export default async function HomePage() {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs">
-                  <span className="text-emerald-300 font-medium flex items-center gap-1">
-                    <CheckCircle2 className="h-3 w-3 text-emerald-400" />
-                    {c._count.instruments || c._count.laws} Instruments
+                  <span className="text-slate-300 font-medium flex items-center gap-1">
+                    <CheckCircle2 className="h-3 w-3 text-cyan-400" />
+                    {c._count.instruments || c._count.laws} Documented
                   </span>
                   <span className="flex items-center gap-1 font-semibold text-cyan-400 group-hover:translate-x-1 transition-transform">
-                    View Laws <ArrowRight className="h-3.5 w-3.5" />
+                    Inspect <ArrowRight className="h-3.5 w-3.5" />
                   </span>
                 </div>
               </Link>

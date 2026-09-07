@@ -47,15 +47,17 @@ async function verifyDatabase() {
 
     for (const country of countries) {
       const verifiedInstruments = country.instruments.filter((i) => i.verificationStatus === 'VERIFIED')
+      const underReviewInstruments = country.instruments.filter((i) => i.verificationStatus !== 'VERIFIED')
       const researchedCats = country.coverages.filter((c) => c.coverageStatus !== 'NOT_RESEARCHED')
       if (verifiedInstruments.length > 0) partiallyResearchedCount++
       fullyResearchedCategories += researchedCats.length
 
       console.log(
-        `🏛  ${country.flagEmoji} ${country.name} (${country.isoCode}) [${country.region}]: ${verifiedInstruments.length} instruments indexed (${researchedCats.length}/${country.coverages.length} categories evaluated)`
+        `🏛  ${country.flagEmoji} ${country.name} (${country.isoCode}) [${country.region}]: ${country.instruments.length} documented (${verifiedInstruments.length} verified, ${underReviewInstruments.length} under review) | ${researchedCats.length}/${country.coverages.length} categories tracked`
       )
       for (const inst of country.instruments) {
-        console.log(`    • [${inst.yearEnacted || 'N/A'}] [${inst.instrumentType}] [${inst.category.name}] ${inst.title}`)
+        const vTag = inst.verificationStatus === 'VERIFIED' ? '✅ VERIFIED' : '⏳ UNDER REVIEW'
+        console.log(`    • [${inst.yearEnacted || 'N/A'}] [${inst.instrumentType}] [${vTag}] [${inst.category.name}] ${inst.title}`)
       }
     }
 

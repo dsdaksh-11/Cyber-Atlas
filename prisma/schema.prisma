@@ -93,8 +93,10 @@ model LegalInstrument {
   category             LegalCategory     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   jurisdictionLevel    String            @default("NATIONAL") // NATIONAL, FEDERAL, STATE_PROVINCIAL, REGIONAL_SUPRANATIONAL
+  scope                String            @default("NATIONAL") // NATIONAL, FEDERAL, REGIONAL, SECTORAL, INTERNATIONAL
 
   yearEnacted          Int?
+  enactmentDate        DateTime?
   effectiveDate        DateTime?
   currentStatus        String            @default("IN_FORCE") // IN_FORCE, REPEALED, PENDING_ENFORCEMENT, DRAFT, SUNSET
   amendmentStatus      String            @default("ORIGINAL") // ORIGINAL, AMENDED, CONSOLIDATED
@@ -105,13 +107,17 @@ model LegalInstrument {
   issuingAuthority     String            // Ministry, regulator, or court
 
   // Verification & Provenance
-  verificationStatus   String            @default("VERIFIED") // VERIFIED, UNVERIFIED, SAMPLE, NEEDS_REVIEW, IN_PROGRESS
+  verificationStatus   String            @default("NEEDS_REVIEW") // VERIFIED, UNVERIFIED, SAMPLE, NEEDS_REVIEW, IN_PROGRESS
+  researchStatus       String            @default("CANDIDATE") // CANDIDATE, RESEARCHED, SOURCE_FOUND, INDEPENDENTLY_VERIFIED, NEEDS_REVIEW, REPEALED, PROPOSED, OUT_OF_SCOPE
   isSampleData         Boolean           @default(false)
   lastVerifiedDate     DateTime?
   researchNotes        String?
+  inclusionExclusionNotes String?
 
   // Direct Source links
   officialUrl          String?
+  isDirectSource       Boolean           @default(false)
+  sourceDocumentType   String?           // OFFICIAL_GAZETTE, PRIMARY_STATUTE, BINDING_DIRECTION, REGULATION, CODE_CHAPTER
   sourceName           String?
   sourceUrl            String?
 
@@ -131,6 +137,7 @@ model LegalInstrument {
   @@index([categoryId])
   @@index([instrumentType])
   @@index([verificationStatus])
+  @@index([researchStatus])
   @@index([yearEnacted])
 }
 
@@ -161,6 +168,7 @@ model LegalSource {
   url           String
   sourceType    String          // "OFFICIAL_GAZETTE", "LEGISLATION_PORTAL", "REGULATOR_SITE", "UNCTAD_TRACKER", "SECONDARY_ACADEMIC"
   isOfficial    Boolean         @default(true)
+  isDirect      Boolean         @default(false)
   retrievedDate DateTime?
 
   createdAt     DateTime        @default(now())

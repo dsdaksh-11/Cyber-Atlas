@@ -23,6 +23,10 @@ export interface LawCardInstrument {
   shortTitle?: string | null
   instrumentType?: string
   year?: number | null
+  scope?: string | null
+  currentStatus?: string | null
+  isDirectSource?: boolean | null
+  researchStatus?: string | null
   category: string
   summary: string
   keyProvisions?: string
@@ -217,18 +221,45 @@ export function LawCard({ law }: LawCardProps) {
               </span>
             )}
 
+            {/* Scope badge */}
+            {law.scope && law.scope !== 'NATIONAL' && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-indigo-950/60 px-2 py-0.5 text-[10px] font-medium text-indigo-300 border border-indigo-800/40">
+                Scope: {law.scope}
+              </span>
+            )}
+
+            {/* Current Status badge (if not standard in force) */}
+            {law.currentStatus && law.currentStatus !== 'IN_FORCE' && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-950/60 px-2 py-0.5 text-[10px] font-medium text-amber-300 border border-amber-800/40">
+                {law.currentStatus === 'PENDING_ENFORCEMENT' ? 'Pending Enforcement' : law.currentStatus}
+              </span>
+            )}
+
             {/* Verification tag */}
             {isVerified ? (
               <span className="inline-flex items-center gap-1 rounded-full bg-emerald-950/60 px-2.5 py-0.5 text-[11px] font-medium text-emerald-400 border border-emerald-800/40">
-                <CheckCircle2 className="h-3 w-3" /> Verified Official Source
+                <CheckCircle2 className="h-3 w-3" /> Independently Verified
               </span>
             ) : law.isSampleData ? (
               <span className="inline-flex items-center gap-1 rounded-full bg-amber-950/60 px-2 py-0.5 text-[10px] font-medium text-amber-400 border border-amber-800/40">
                 <Info className="h-3 w-3" /> Sample Legal Data
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 rounded-full bg-slate-800 px-2 py-0.5 text-[10px] font-medium text-slate-400 border border-slate-700">
-                Pending Verification
+              <span className="inline-flex items-center gap-1 rounded-full bg-slate-800/80 px-2 py-0.5 text-[10px] font-medium text-amber-300/90 border border-amber-800/30">
+                <Clock className="h-3 w-3 text-amber-400" /> Official Source Cited (Under Review)
+              </span>
+            )}
+
+            {/* Direct Source vs General Portal tag */}
+            {law.isDirectSource !== undefined && law.isDirectSource !== null && (
+              <span
+                className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium border ${
+                  law.isDirectSource
+                    ? 'bg-cyan-950/40 text-cyan-300 border-cyan-800/40'
+                    : 'bg-slate-900 text-slate-400 border-slate-800'
+                }`}
+              >
+                {law.isDirectSource ? 'Direct Gazette/Act' : 'General Portal'}
               </span>
             )}
           </div>

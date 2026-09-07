@@ -45,6 +45,7 @@ interface InstrumentDetail {
   title: string
   shortTitle?: string | null
   instrumentType: string
+  scope?: string | null
   year: number | null
   category: string
   summary: string
@@ -55,6 +56,8 @@ interface InstrumentDetail {
   sourceUrl?: string | null
   lastUpdated?: string | null
   verificationStatus: string
+  isDirectSource?: boolean | null
+  researchStatus?: string | null
   provisions: ProvisionSummary[]
 }
 
@@ -64,6 +67,7 @@ interface CategoryCellResult {
   unctadBaselineCovered?: boolean | null
   unctadBaselineStatus?: string | null
   verifiedCount: number
+  documentedCount?: number
   hasLaw: boolean
   confidenceLevel: string
   researchNotes?: string | null
@@ -446,10 +450,17 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
                             <div className="space-y-3">
                               {/* Status Badge */}
                               <div className="flex justify-center">
-                                <span className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-950/80 px-3 py-1.5 text-xs font-semibold text-emerald-300 border border-emerald-500/40 shadow-md">
-                                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                                  <span>{res.verifiedCount} Verified Instrument(s)</span>
-                                </span>
+                                {res.verifiedCount > 0 ? (
+                                  <span className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-950/80 px-3 py-1.5 text-xs font-semibold text-emerald-300 border border-emerald-500/40 shadow-md">
+                                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                                    <span>{res.verifiedCount} Verified Instrument(s)</span>
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center gap-1.5 rounded-xl bg-amber-950/60 px-3 py-1.5 text-xs font-semibold text-amber-300 border border-amber-500/40 shadow-md">
+                                    <Clock className="h-3.5 w-3.5 text-amber-400" />
+                                    <span>{res.instruments.length} Baseline (Under Review)</span>
+                                  </span>
+                                )}
                               </div>
 
                               {/* Instrument Previews */}
@@ -563,15 +574,32 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
                   <div className="flex flex-wrap items-start justify-between gap-2 border-b border-slate-800/80 pb-3">
                     <div>
                       <h4 className="text-base font-bold text-white">{inst.title}</h4>
-                      <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400 pt-1">
+                      <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400 pt-1.5">
                         <span className="rounded bg-slate-900 px-2 py-0.5 border border-slate-800 text-cyan-300 font-mono">
                           {inst.instrumentType}
                         </span>
+                        {inst.scope && (
+                          <span className="rounded bg-slate-900 px-2 py-0.5 border border-slate-800 text-slate-300 font-sans text-[11px]">
+                            {inst.scope}
+                          </span>
+                        )}
                         <span>•</span>
                         <span className="flex items-center gap-1">
                           <Calendar className="h-3 w-3 text-cyan-400" />
                           Enacted {inst.year || 'N/A'}
                         </span>
+                        <span>•</span>
+                        {inst.verificationStatus === 'VERIFIED' ? (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400">
+                            <CheckCircle2 className="h-3 w-3" />
+                            Independently Verified
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-medium text-amber-300">
+                            <Clock className="h-3 w-3" />
+                            Official Source Cited (Under Review)
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -580,9 +608,9 @@ export function CompareView({ initialCountriesList }: CompareViewProps) {
                         href={inst.officialUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 rounded-lg border border-cyan-500/30 bg-cyan-950/60 px-2.5 py-1 text-xs font-medium text-cyan-300 hover:bg-cyan-900/60 transition-colors"
+                        className="inline-flex items-center gap-1 rounded-lg border border-cyan-500/30 bg-cyan-950/60 px-2.5 py-1 text-xs font-medium text-cyan-300 hover:bg-cyan-900/60 transition-colors shrink-0"
                       >
-                        <span>Official Gazette</span>
+                        <span>{inst.isDirectSource ? 'Direct Gazette / Text' : 'Official Portal'}</span>
                         <ExternalLink className="h-3 w-3" />
                       </a>
                     )}

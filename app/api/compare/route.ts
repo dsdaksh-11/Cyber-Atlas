@@ -91,6 +91,7 @@ export interface InstrumentSummary {
   title: string
   shortTitle?: string | null
   instrumentType: string
+  scope?: string | null
   year: number | null
   category: string
   summary: string
@@ -101,6 +102,8 @@ export interface InstrumentSummary {
   sourceUrl?: string | null
   lastUpdated?: string | null
   verificationStatus: string
+  isDirectSource?: boolean | null
+  researchStatus?: string | null
   provisions: ProvisionSummary[]
 }
 
@@ -110,6 +113,7 @@ export interface CountryComparisonCell {
   unctadBaselineCovered?: boolean | null
   unctadBaselineStatus?: string | null
   verifiedCount: number
+  documentedCount?: number
   hasLaw: boolean
   confidenceLevel: string
   researchNotes?: string | null
@@ -231,16 +235,20 @@ export async function GET(request: NextRequest) {
           return cat.aliases.some((alias) => lCat.includes(alias) || lTitle.includes(alias))
         })
 
-        const hasInstruments = matchingInstruments.length > 0 || matchingLaws.length > 0
-        const verifiedCount = matchingInstruments.length > 0 ? matchingInstruments.length : matchingLaws.length
+        const verifiedInstruments = matchingInstruments.filter(
+          (i) => i.verificationStatus === 'VERIFIED' && !i.isSampleData
+        )
+        const verifiedCount = verifiedInstruments.length
+        const documentedCount = matchingInstruments.length > 0 ? matchingInstruments.length : matchingLaws.length
+        const hasInstruments = documentedCount > 0
 
         const coverageStatus = coverage?.coverageStatus || (hasInstruments ? 'PARTIALLY_RESEARCHED' : 'NOT_RESEARCHED')
         let coverageLabel = 'Not yet documented in this database'
 
-        if (coverageStatus === 'VERIFIED' || coverageStatus === 'RESEARCH_COMPLETED') {
+        if (verifiedCount > 0) {
           coverageLabel = `✓ ${verifiedCount} Verified Instrument(s)`
-        } else if (coverageStatus === 'PARTIALLY_RESEARCHED') {
-          coverageLabel = `⚡ ${verifiedCount} Documented (Research ongoing)`
+        } else if (documentedCount > 0) {
+          coverageLabel = `⚡ ${documentedCount} Baseline Instrument(s) (Under Review)`
         } else if (cat.unctadBaseline) {
           coverageLabel = 'Pending Research (UNCTAD: Legislation exists)'
         } else {
@@ -252,6 +260,7 @@ export async function GET(request: NextRequest) {
           title: inst.title,
           shortTitle: inst.shortTitle,
           instrumentType: inst.instrumentType,
+          scope: inst.scope,
           year: inst.yearEnacted,
           category: inst.category?.name || cat.categoryName,
           summary: inst.summary,
@@ -262,6 +271,8 @@ export async function GET(request: NextRequest) {
           sourceUrl: inst.sourceUrl,
           lastUpdated: inst.lastVerifiedDate ? inst.lastVerifiedDate.toISOString().split('T')[0] : null,
           verificationStatus: inst.verificationStatus,
+          isDirectSource: inst.isDirectSource,
+          researchStatus: inst.researchStatus,
           provisions: inst.provisions.map((p) => ({
             articleNumber: p.articleNumber,
             heading: p.heading,
